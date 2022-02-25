@@ -14,11 +14,8 @@ func _ready():
     add_child(squad_1)
     add_child(squad_2)
     UiRadialMenuHandler.connect("order_move", self, "move_selected_squad")
-
     resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
     $RadialMenu.rect_global_position = resolution/2
-    print($RadialMenu.rect_global_position)
-    print(resolution/2)
     $Debugger.add_property(UiRadialMenuHandler, "squad_selected", "")
 
 
@@ -38,8 +35,8 @@ func _unhandled_input(event):
         UiRadialMenuHandler.toggle_radial_menu(event.position)
         UiRadialMenuHandler.set_target_position(mouse_position)
         $Marker.transform.origin = mouse_position
-        print("mouse_position "+ str(mouse_position))
-        print("event.position "+ str(event.position))
+#        print("mouse_position "+ str(mouse_position))
+#        print("event.position "+ str(event.position))
 #    if event.is_action_released("ui_squad_menu"):
 #        UiRadialMenuHandler.toggle_radial_menu(event.position)
 
