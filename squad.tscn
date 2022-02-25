@@ -3,7 +3,7 @@
 [ext_resource path="res://TeamMate.tscn" type="PackedScene" id=1]
 [ext_resource path="res://squad.gd" type="Script" id=3]
 
-[node name="squad" type="Node" groups=[
+[node name="Squad" type="Node" groups=[
 "team",
 ]]
 script = ExtResource( 3 )

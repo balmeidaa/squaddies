@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
+[ext_resource path="res://EnemySoldier.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Debugger.tscn" type="PackedScene" id=4]
 [ext_resource path="res://RadialMenu.tscn" type="PackedScene" id=5]
 
@@ -52,3 +53,5 @@ shadow_bias = -0.2
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
+
+[node name="EnemySoldier" parent="." instance=ExtResource( 2 )]

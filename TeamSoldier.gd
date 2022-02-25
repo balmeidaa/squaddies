@@ -52,9 +52,14 @@ func _on_EnemyDetector_body_entered(body):
         enemy_contact = true
         enemy_target = body.transform.origin
         look_at(enemy_target, Vector3.UP)
-        $AnimationPlayer.set_animation("fire")
+        $AnimationPlayer.set_animation("attack")
 
 
 
 func _on_EnemyDetector_body_exited(body):
      enemy_contact = false
+     if target == null:
+        
+        $AnimationPlayer.set_animation("idle")
+     else:
+        $AnimationPlayer.set_animation("move_to")
