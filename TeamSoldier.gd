@@ -66,5 +66,5 @@ func _update_animation():
     var keys_array = logic_control.states.keys()
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
-    print(animation)
+    #print(animation)
     anim_player.set_animation(animation)
