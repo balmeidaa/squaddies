@@ -60,6 +60,7 @@ ui_select_all={
 
 3d_physics/layer_1="squadteam"
 3d_physics/layer_2="enemyteam"
+3d_physics/layer_3="bullet"
 
 [rendering]
 

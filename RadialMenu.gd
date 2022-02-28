@@ -6,6 +6,13 @@ export var speed = 0.25
 var number_items
 var active = false
 
+const min_x = 75.0
+const min_y = 62.0
+
+const max_x = 140.0
+const max_y = 110.0
+var screen_size = Vector2.ZERO
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     UiRadialMenuHandler.connect("invoke_radial_menu", self, "toggle_menu")
@@ -14,6 +21,8 @@ func _ready():
         buttons.rect_global_position = rect_global_position
         buttons.hide()
 
+func set_up(resolution:Vector2):
+    screen_size = resolution
 
 func toggle_menu(position:Vector2):
     active = !active
@@ -25,11 +34,15 @@ func toggle_menu(position:Vector2):
 
 func show_menu(position):
     var spacing = TAU / number_items
+    position.x = clamp(position.x, min_x, (screen_size.x - max_x)) 
+    position.y = clamp(position.y, min_y, (screen_size.y - max_y)) 
+    
     for buttons in $Control.get_children():
         buttons.show()
         # Subtract PI/2 to align the first button  to the top
         var angle = spacing * buttons.get_position_in_parent() - PI / 2
         var dest = position + Vector2(radius, 0).rotated(angle)
+        
         $Tween.interpolate_property(buttons, "rect_position",
                 buttons.rect_position, dest, speed,
                 Tween.TRANS_BACK, Tween.EASE_OUT)

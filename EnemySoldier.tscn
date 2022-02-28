@@ -20,12 +20,12 @@ radius = 9.87988
 "enemy",
 ] instance=ExtResource( 1 )]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 7
 script = ExtResource( 2 )
 gravity = -5
 
 [node name="MeshInstance" type="MeshInstance" parent="." index="0"]
-transform = Transform( -0.918778, -0.198613, 3.23581e-08, 0, -1.53145e-07, -0.94, 0.198613, -0.918778, 1.49688e-07, 0, 0.5, 0 )
+transform = Transform( -0.94, 3.06291e-07, -4.99011e-14, 0, -1.53145e-07, -0.94, -3.06291e-07, -0.94, 1.53145e-07, 0, 0.5, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 

@@ -15,6 +15,7 @@ func _ready():
     add_child(squad_2)
     UiRadialMenuHandler.connect("order_move", self, "move_selected_squad")
     resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
+    $RadialMenu.set_up(resolution)
     $RadialMenu.rect_global_position = resolution/2
     $Debugger.add_property(UiRadialMenuHandler, "squad_selected", "")
 
