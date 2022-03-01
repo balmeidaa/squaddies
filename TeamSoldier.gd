@@ -11,7 +11,7 @@ var enemy_contact = false
 var enemy_target = []
 onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
-var dict = {}
+onready var debug_label = $Debug.get_node("Viewport/Label")
 
 func _ready():
     pass
@@ -33,8 +33,8 @@ func _stop_moving():
 
 func _attack():
     look_at(enemy_target, Vector3.UP)
-
-
+    $FirePosition.fire()
+    
 func _should_move():
     if target != null:
         return true
@@ -67,4 +67,6 @@ func _update_animation():
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
     #print(animation)
+    if debug_label != null:
+        debug_label.text = animation
     anim_player.set_animation(animation)

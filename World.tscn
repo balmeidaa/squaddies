@@ -26,6 +26,7 @@ material = SubResource( 4 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 1 )
+dummy = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7.52458, 16.7781 )
@@ -53,5 +54,3 @@ shadow_bias = -0.2
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
-
-[node name="EnemySoldier" parent="." instance=ExtResource( 2 )]

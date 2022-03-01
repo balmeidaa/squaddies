@@ -28,6 +28,10 @@ config/icon="res://icon.png"
 
 UiRadialMenuHandler="*res://UiRadialMenuHandler.gd"
 
+[global]
+
+color=false
+
 [input]
 
 ui_squad_menu={

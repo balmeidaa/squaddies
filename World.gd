@@ -2,12 +2,15 @@ extends Spatial
 
 var resolution
 var position3D
-
+export(PackedScene) var dummy
 const squad_factory = preload("res://squad.tscn")
 var squad_1
 var squad_2
 
+var rng = RandomNumberGenerator.new()
+
 func _ready():
+    rng.randomize()
     squad_1 = squad_factory.instance()
     squad_2 = squad_factory.instance()
 
@@ -17,7 +20,7 @@ func _ready():
     resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
     $RadialMenu.set_up(resolution)
     $RadialMenu.rect_global_position = resolution/2
-    $Debugger.add_property(UiRadialMenuHandler, "squad_selected", "")
+    #$Debugger.add_property(UiRadialMenuHandler, "squad_selected", "")
 
 
 
@@ -25,7 +28,9 @@ func _unhandled_input(event):
     var mouse_position = get_mouse_position()
     #Debug purposes
     if event.is_action_pressed("ui_accept"):
-       $EnemySoldier.queue_free()
+        var new_dummy = dummy.instance()
+        new_dummy.global_transform.origin = Vector3(rng.randf_range(-10.0, 10.0),0,rng.randf_range(-10.0, 10.0))
+        add_child(new_dummy)
     if event.is_action_pressed("ui_select_squad_1"):
         UiRadialMenuHandler.set_squad(1)
     if event.is_action_pressed("ui_select_squad_2"):
