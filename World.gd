@@ -16,7 +16,7 @@ func _ready():
 
     add_child(squad_1)
     add_child(squad_2)
-    InputHandler.connect("order_move", self, "move_selected_squad")
+    InputHandler.connect("order_squad", self, "execute_order_squad")
     resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
     $RadialMenu.set_up(resolution)
     $RadialMenu.rect_global_position = resolution/2
@@ -26,8 +26,7 @@ func _ready():
 
 func _unhandled_input(event):
     var mouse_position = get_mouse_3Dposition()
-    
-    
+
     #Debug purposes
     if event.is_action_pressed("ui_accept"):
         var new_dummy = dummy.instance()
@@ -50,20 +49,28 @@ func _unhandled_input(event):
 #        print("mouse_position "+ str(mouse_position))
 #        print("event.position "+ str(event.position))
 
-func move_selected_squad():
-    
+
+
+func execute_order_squad(order):
+    var active_squad = return_active_squad()
+    if typeof(active_squad) == TYPE_ARRAY:
+        for squad in active_squad:
+            squad.call(order)
+    else:
+        active_squad.call(order)
+        
+
+func return_active_squad():
     var squad_name = "squad_" + String(InputHandler.squad_selected)
     
     match squad_name:
         "squad_1":
-            squad_1.move_squad()
+            return squad_1
         "squad_2":
-            squad_2.move_squad()
+            return squad_2
         _:
             var team = get_tree().get_nodes_in_group("team")
-            for squad in team:
-                squad.move_squad()  
-            
+            return team # array        
 
 func get_mouse_3Dposition() -> Vector3:
     var position2D = get_viewport().get_mouse_position()

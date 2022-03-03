@@ -15,3 +15,5 @@ func move_squad():
     for team in self.get_children():
         team.target = move_position
         
+func regroup():
+    pass

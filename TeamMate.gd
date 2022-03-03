@@ -7,6 +7,7 @@ var target = null
 var velocity = Vector3.ZERO
 var distance = null
 var contact = false
+var follow_player = false
 var enemy_contact = false
 var enemy_target = []
 onready var anim_player = $AnimationPlayer
