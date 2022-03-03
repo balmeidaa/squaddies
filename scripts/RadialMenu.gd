@@ -15,7 +15,7 @@ var screen_size = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    UiRadialMenuHandler.connect("invoke_radial_menu", self, "toggle_menu")
+    InputHandler.connect("invoke_radial_menu", self, "toggle_menu")
     number_items = $Control.get_child_count()
     for buttons in $Control.get_children():
         buttons.rect_global_position = rect_global_position
@@ -71,7 +71,7 @@ func _on_Regroup_pressed():
 
 
 func _on_Go_pressed():
-    UiRadialMenuHandler.order_squad()
+    InputHandler.order_squad()
     active = false
     hide_menu()
 

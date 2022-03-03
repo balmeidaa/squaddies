@@ -7,7 +7,7 @@ var can_shoot = true
 
 export var muzzle_speed = 30
 export var millis_between_shots = 100
-
+#refactor to weapon scene
 func _ready():
     rof_timer.wait_time = millis_between_shots / 1000.0
     rof_timer.start()

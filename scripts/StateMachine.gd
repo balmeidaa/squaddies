@@ -17,10 +17,10 @@ func _physics_process(delta):
         if transition != null:
             set_state(transition)
  
-func _state_logic(delta):
+func _state_logic(_delta):
     pass
 
-func _get_transition(delta):
+func _get_transition(_delta):
     return null
     
 func _enter_state(new_state, old_state):

@@ -1,12 +1,16 @@
 extends Node
 signal invoke_radial_menu
 signal order_move
+signal player_1_look_at
 
 var target_position: Vector3 setget set_target_position,get_target_position
 var squad_selected: int = 0 setget set_squad
 
 func _ready():
     pass # Replace with function body.
+    
+func player_1_look_at(position:Vector3):
+    emit_signal("player_1_look_at", position)
 
 func order_squad():
     #Agregar de que squad estamos referiendp

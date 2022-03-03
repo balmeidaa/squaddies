@@ -32,8 +32,15 @@ func _stop_moving():
     velocity = Vector3.ZERO
 
 func _attack():
-    look_at(enemy_target, Vector3.UP)
-    $FirePosition.fire()
+    find_next_target()
+    if enemy_target.size() > 0:
+        var enemy_position = enemy_target[0].global_transform.origin
+        look_at(enemy_position, Vector3.UP)
+        $FirePosition.fire()
+        
+func find_next_target():
+    while (enemy_target.size() > 0 and not is_instance_valid(enemy_target[0])):
+        enemy_target.pop_front()
     
 func _should_move():
     if target != null:
@@ -55,18 +62,32 @@ func _on_Area_body_exited(body):
 
 
 func _on_EnemyDetector_body_entered(body):
-    if body.is_in_group("enemy"):  
-        enemy_contact = true
-        enemy_target = body.transform.origin
+    if body.is_in_group("enemy"):           
+        enemy_contact = add_enemy_queue(body)
+        
 
 func _on_EnemyDetector_body_exited(body):
-     enemy_contact = false
+    
+    var index_array = enemy_target.find(body)
+    
+    if body.is_in_group("enemy") and index_array >= 0:
+        enemy_target.erase(index_array)
+        
+    if enemy_target.size() == 0:    
+        enemy_contact = false
+        
+
+func add_enemy_queue(body):
+    if enemy_target.find(body) == -1:
+        enemy_target.append(body)
+        return true
+    
+    return false
 
 func _update_animation():
     var keys_array = logic_control.states.keys()
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
-    #print(animation)
     if debug_label != null:
         debug_label.text = animation
     anim_player.set_animation(animation)

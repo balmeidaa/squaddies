@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://EnemySoldier.tscn" type="PackedScene" id=2]
+[ext_resource path="res://PlayerSoldier.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Debugger.tscn" type="PackedScene" id=4]
 [ext_resource path="res://RadialMenu.tscn" type="PackedScene" id=5]
 
@@ -31,7 +32,7 @@ dummy = ExtResource( 2 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7.52458, 16.7781 )
 current = true
-fov = 50.0
+fov = 80.0
 near = 0.01
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -54,3 +55,5 @@ shadow_bias = -0.2
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
+
+[node name="Player" parent="." instance=ExtResource( 3 )]

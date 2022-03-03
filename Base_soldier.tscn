@@ -1,11 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://TeamSoldier.gd" type="Script" id=2]
-[ext_resource path="res://fire_particles.tscn" type="PackedScene" id=3]
+[ext_resource path="res://FireParticles.tscn" type="PackedScene" id=3]
 
 [node name="BaseSoldier" type="KinematicBody"]
-script = ExtResource( 2 )
-gravity = 0
 
 [node name="FirePosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.683332, -1.04544 )

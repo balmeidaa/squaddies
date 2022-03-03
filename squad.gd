@@ -11,7 +11,7 @@ func _ready():
         team.global_transform.origin = Vector3(x,y,z)
 
 func move_squad():
-    var move_position = UiRadialMenuHandler.get_target_position()
+    var move_position = InputHandler.get_target_position()
     for team in self.get_children():
         team.target = move_position
         
