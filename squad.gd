@@ -16,4 +16,5 @@ func move_squad():
         team.target = move_position
         
 func regroup():
-    pass
+    for team in self.get_children():
+        team.follow_player = true
