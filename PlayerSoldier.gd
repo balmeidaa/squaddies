@@ -67,4 +67,4 @@ func _update_animation():
 func _on_DistanceTimer_timeout():
     if transform.origin != Vector3.ZERO:
         InputHandler.set_player_1_position(transform.origin)
-    print(transform.origin)
+
