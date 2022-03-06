@@ -19,7 +19,10 @@ func _state_logic(delta):
     if state == states.attack  and parent._should_attack():
         parent._attack()
         
-    
+ # target is far away from detection area
+    if state == states.attack  and not parent._should_attack():
+        parent._move_towards_enemy()
+        
     parent._update_animation()
             
 func _get_transition(delta):
@@ -40,7 +43,9 @@ func _get_transition(delta):
                 return states.attack
             elif parent._should_move():
                 return states.move_to
-            elif not parent._should_move():
+            elif parent._should_follow():
+                return states.follow
+            else:
                 return states.idle
                 
         states.follow:
@@ -48,8 +53,10 @@ func _get_transition(delta):
                 return states.attack
             elif parent._should_move():
                 return states.move_to
-            else:
+            elif parent._should_follow():
                 return states.follow
+            else:
+                return states.idle
 
 
         

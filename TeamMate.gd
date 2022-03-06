@@ -6,7 +6,6 @@ export var gravity = -5
 var target = null
 var velocity = Vector3.ZERO
 var distance = null
-var contact = false
 var follow_player = false
 var enemy_contact = false
 var enemy_target = []
@@ -32,6 +31,11 @@ func _stop_moving():
     target = null
     velocity = Vector3.ZERO
 
+func _move_towards_enemy():
+    if not enemy_contact and enemy_target.size() > 0: 
+        target = enemy_target[0].global_transform.origin
+        print(target)
+
 func _attack():
     find_next_target()
     if enemy_target.size() > 0:
@@ -56,10 +60,11 @@ func _should_follow():
     return follow_player
 
 func follow_player_position():
-    target = InputHandler.player_1_position
-    var distance = transform.origin.distance_to(target)   
-    if distance != null and distance < 6:
-        _stop_moving()
+    if _should_follow():
+        target = InputHandler.player_1_position
+        var distance = transform.origin.distance_to(target)   
+        if distance != null and distance < 6:
+            _stop_moving()
  
 func check_order(order):
     match (order):
@@ -85,13 +90,9 @@ func _update_animation():
 
 
 func _on_Area_body_entered(_body):
-    contact = true  
     if target != null and transform.origin.distance_to(target) < 5:
         _stop_moving()
     
-func _on_Area_body_exited(body):
-    contact = false
-
 
 func _on_EnemyDetector_body_entered(body):
     if body.is_in_group("enemy"):           
@@ -99,10 +100,10 @@ func _on_EnemyDetector_body_entered(body):
         
 
 func _on_EnemyDetector_body_exited(body):
-    var index_array = enemy_target.find(body)
     
+    var index_array = enemy_target.find(body)
     if body.is_in_group("enemy") and index_array >= 0:
-        enemy_target.erase(index_array)
-        
+        enemy_target.remove (index_array)
+         
     if enemy_target.size() == 0:    
         enemy_contact = false

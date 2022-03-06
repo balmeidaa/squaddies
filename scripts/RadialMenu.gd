@@ -79,4 +79,6 @@ func _on_Go_pressed():
 
 
 func _on_Attack_pressed():
-    pass # Replace with function body.
+    InputHandler.order_squad("attack")
+    active = false
+    hide_menu()

@@ -67,6 +67,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )
 
 [node name="EnemyDetector" parent="." index="5" instance=ExtResource( 2 )]
+collision_layer = 0
 collision_mask = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
@@ -78,6 +79,5 @@ script = ExtResource( 5 )
 texture = SubResource( 3 )
 [connection signal="timeout" from="FirePosition/Timer" to="FirePosition" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
-[connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
 [connection signal="body_exited" from="EnemyDetector" to="." method="_on_EnemyDetector_body_exited"]
