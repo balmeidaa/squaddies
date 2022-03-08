@@ -14,10 +14,10 @@ var rng = RandomNumberGenerator.new()
 func _ready():
     rng.randomize()
     squad_1 = squad_factory.instance()
-#    squad_2 = squad_factory.instance()
+    squad_2 = squad_factory.instance()
 
     add_child(squad_1)
-#    add_child(squad_2)
+    add_child(squad_2)
     InputHandler.connect("order_squad", self, "execute_order_squad")
     InputHandler.connect("order_squad", self, "check_order")
 
@@ -34,7 +34,7 @@ func _unhandled_input(event):
     #Debug purposes
     if event.is_action_pressed("ui_accept"):
         var new_dummy = dummy.instance()
-        new_dummy.global_transform.origin = Vector3(rng.randf_range(-10.0, 10.0),0,rng.randf_range(-10.0, 10.0))
+        new_dummy.global_transform.origin = Vector3(rng.randf_range(-10.0, 10.0),0.02,rng.randf_range(-10.0, 10.0))
         add_child(new_dummy)
     
     if event is InputEventMouseMotion:
@@ -50,11 +50,11 @@ func _unhandled_input(event):
         InputHandler.toggle_radial_menu(event.position)
         InputHandler.set_squad_position(mouse_position)
         $Marker.transform.origin = mouse_position
-#        print("mouse_position "+ str(mouse_position))
+
 #        print("event.position "+ str(event.position))
 
 
-
+#Agregar de que jugador viene la orden
 func execute_order_squad(order):
     var active_squad = return_active_squad()
     if typeof(active_squad) == TYPE_ARRAY:

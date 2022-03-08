@@ -9,6 +9,8 @@ func _ready():
     call_deferred("set_state", states.idle)
     
 func _state_logic(delta):
+    if state == states.reload:
+        parent._reload()
     
     if state == states.follow:
         parent.follow_player_position()
@@ -31,6 +33,8 @@ func _get_transition(delta):
         states.idle:
             if parent._should_move(): 
                 return states.move_to
+            elif parent._should_reload():
+                return states.reload
             elif parent._should_attack():
                 return states.attack
             elif parent._should_follow():
@@ -39,7 +43,9 @@ func _get_transition(delta):
                 return states.idle
                 
         states.move_to, states.attack:
-            if parent._should_attack():
+            if parent._should_reload():
+                return states.reload
+            elif parent._should_attack():
                 return states.attack
             elif parent._should_move():
                 return states.move_to
@@ -50,6 +56,18 @@ func _get_transition(delta):
                 
         states.follow:
             if parent._should_attack():
+                return states.attack
+            elif parent._should_move():
+                return states.move_to
+            elif parent._should_follow():
+                return states.follow
+            else:
+                return states.idle
+                
+        states.reload:
+            if parent._should_reload():
+                return states.reload
+            elif parent._should_attack():
                 return states.attack
             elif parent._should_move():
                 return states.move_to

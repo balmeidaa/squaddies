@@ -3,12 +3,15 @@ extends KinematicBody
 export var speed = 10
 export var gravity = -5
 
+var hit_points = 100
 var target = null
 var velocity = Vector3.ZERO
 var distance = null
 var follow_player = false
 var enemy_contact = false
 var enemy_target = []
+var reloading = false setget set_reload
+
 onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
 onready var debug_label = $Debug.get_node("Viewport/Label")
@@ -34,7 +37,7 @@ func _stop_moving():
 func _move_towards_enemy():
     if not enemy_contact and enemy_target.size() > 0: 
         target = enemy_target[0].global_transform.origin
-        print(target)
+
 
 func _attack():
     find_next_target()
@@ -42,7 +45,16 @@ func _attack():
         var enemy_position = enemy_target[0].global_transform.origin
         look_at(enemy_position, Vector3.UP)
         $FirePosition.fire()
-        
+ 
+func _reload():
+    pass
+
+func _should_reload():
+    return reloading
+  
+func set_reload(reload:bool):
+    reloading = reload
+     
 func find_next_target():
     while (enemy_target.size() > 0 and not is_instance_valid(enemy_target[0])):
         enemy_target.pop_front()
@@ -85,7 +97,7 @@ func _update_animation():
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
     if debug_label != null:
-        debug_label.text = animation
+        debug_label.text = str(animation)
     anim_player.set_animation(animation)
 
 
@@ -107,3 +119,9 @@ func _on_EnemyDetector_body_exited(body):
          
     if enemy_target.size() == 0:    
         enemy_contact = false
+
+func _bullet_hit(bullet_damage):
+    hit_points -= bullet_damage
+    $Debug/Viewport/Label.text = str(hit_points)
+    if hit_points < 0:
+        call_deferred("queue_free")

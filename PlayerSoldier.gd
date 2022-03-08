@@ -10,7 +10,7 @@ var contact = false
 var is_moving = false
 var is_attacking = false
 var is_followed = false
-
+var reloading = false setget set_reload
 onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
 onready var debug_label = $Debug.get_node("Viewport/Label")
@@ -43,7 +43,9 @@ func _unhandled_input(event):
         is_attacking = true
     if event.is_action_released("player_fire_1"):
         is_attacking = false
-
+        
+func set_reload(reload:bool):
+    reloading = reload
 
 func _move_status():
     return is_moving

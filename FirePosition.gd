@@ -3,10 +3,14 @@ extends Position3D
 export(PackedScene) var Bullet
 
 onready var rof_timer = $Timer
+onready var reload_timer = $ReloadTimer
 var can_shoot = true
 
 export var muzzle_speed = 30
 export var millis_between_shots = 100
+onready var parent = get_parent()
+export var  ammo = 30
+
 #refactor to weapon scene
 func _ready():
     rof_timer.wait_time = millis_between_shots / 1000.0
@@ -14,7 +18,10 @@ func _ready():
 
     
 func fire():
-    if can_shoot:
+    if ammo <= 0:
+        parent.set_reload(true)
+        reload_timer.start()
+    elif can_shoot and ammo > 0:
         var new_bullet = Bullet.instance()
         new_bullet.global_transform = global_transform
   #      new_bullet.speed = muzzle_speed
@@ -23,6 +30,12 @@ func fire():
         can_shoot = false
         $Muzzle.muzzle_on()
         rof_timer.start()
+        ammo -= 3
+
+ 
+func _on_ReloadTimer_timeout():
+    ammo = 30
+    parent.set_reload(false)
 
 
 func _on_Timer_timeout():

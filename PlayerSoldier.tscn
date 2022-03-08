@@ -59,10 +59,13 @@ script = ExtResource( 8 )
 Bullet = ExtResource( 9 )
 
 [node name="Timer" type="Timer" parent="FirePosition" index="0"]
-autostart = true
 
-[node name="Muzzle" parent="FirePosition" index="1"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -2.29826e-07, 0, -0.0447133 )
+[node name="ReloadTimer" type="Timer" parent="FirePosition" index="1"]
+wait_time = 0.8
+one_shot = true
+
+[node name="Muzzle" parent="FirePosition" index="2"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -3.5594e-07, 0, 0.342327 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 autoplay = "idle"
@@ -78,4 +81,5 @@ texture = SubResource( 3 )
 wait_time = 0.8
 autostart = true
 [connection signal="timeout" from="FirePosition/Timer" to="FirePosition" method="_on_Timer_timeout"]
+[connection signal="timeout" from="FirePosition/ReloadTimer" to="FirePosition" method="_on_ReloadTimer_timeout"]
 [connection signal="timeout" from="DistanceTimer" to="." method="_on_DistanceTimer_timeout"]

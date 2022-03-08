@@ -19,6 +19,6 @@ func _physics_process(delta):
 
 
 func _on_Area_body_entered(body):
-    if body.has_method("bullet_hit"):
-        body.bullet_hit(BULLET_DAMAGE)
+    if body.has_method("_bullet_hit"):
+        body._bullet_hit(BULLET_DAMAGE)
     queue_free()
