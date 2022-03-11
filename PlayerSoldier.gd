@@ -36,11 +36,9 @@ func _ready():
     move_down_action = "down_p{n}".format({"n":player_index})
     move_up_action = "up_p{n}".format({"n":player_index})
     fire_action = "fire_p{n}".format({"n":player_index})
-    
-    InputHandler.connect("player_1_look_at", self, "player_look_at")
+
     InputHandler.connect("order_squad", self, "execute_order_squad")
-    InputHandler.connect("order_squad", self, "check_order")
-    
+
 func _process(delta):
     velocity = Vector3.ZERO
     if Input.is_action_pressed(move_right_action):
@@ -71,16 +69,19 @@ func _unhandled_input(event):
     
     if event is InputEventMouseMotion:
         if mouse_position:
-            InputHandler.player_1_look_at(mouse_position)
+            player_look_at(mouse_position)
     if event.is_action_pressed("select_squad_1_p1"):
-        InputHandler.set_squad(player_index, 1)
+        InputHandler.set_player_input(player_index, 'squad_selected', 1)
+        
     if event.is_action_pressed("select_squad_2_p1"):
-        InputHandler.set_squad(player_index ,2)
+        InputHandler.set_player_input(player_index, 'squad_selected', 2)
+    
     if event.is_action_pressed("select_team_p1"):
-        InputHandler.set_squad(player_index, 0)
+        InputHandler.set_player_input(player_index, 'squad_selected', 0)
+    
     if event.is_action_pressed("squad_menu_p1"):
-        InputHandler.toggle_radial_menu(event.position)
-        InputHandler.set_squad_position(player_index, mouse_position)
+        InputHandler.toggle_radial_menu(player_index, event.position)
+        InputHandler.set_player_input(player_index, 'squad_next_position', mouse_position)
         marker.transform.origin = mouse_position
         
 func set_reload(reload:bool):
@@ -107,7 +108,7 @@ func _update_animation():
 
 func _on_DistanceTimer_timeout():
     if transform.origin != Vector3.ZERO:
-        InputHandler.set_player_1_position(transform.origin)
+        InputHandler.set_player_input(player_index, 'player_position', transform.origin)
 
 func execute_order_squad(player, order):
     var active_squad = return_active_squad()
@@ -119,7 +120,8 @@ func execute_order_squad(player, order):
         
 
 func return_active_squad():
-    var squad_name = "squad_" + String(InputHandler.squad_selected)
+    var squad_selection = InputHandler.get_player_input(player_index, 'squad_selected')
+    var squad_name = "squad_" + String(squad_selection)
     
     match squad_name:
         "squad_1":
@@ -138,10 +140,9 @@ func check_order(player, order):
         _:
             order_attack_active = false
 
-
 func _on_MarkedEnemy_body_entered(body):
     if order_attack_active:
-        InputHandler.set_target_enemy(player_index, body)
+        InputHandler.set_player_input(player_index, 'target_enemy', body)
     
 func get_mouse_3Dposition() -> Vector3:
     var position2D = get_viewport().get_mouse_position()

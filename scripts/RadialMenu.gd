@@ -13,8 +13,15 @@ const max_x = 140.0
 const max_y = 110.0
 var screen_size = Vector2.ZERO
 
+var player_index : int
+onready var parent = get_parent()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    player_index = parent.player_index
+    var resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
+    set_up(resolution)
+    rect_global_position = resolution/2
     InputHandler.connect("invoke_radial_menu", self, "toggle_menu")
     number_items = $Control.get_child_count()
     for buttons in $Control.get_children():
@@ -24,12 +31,13 @@ func _ready():
 func set_up(resolution:Vector2):
     screen_size = resolution
 
-func toggle_menu(position:Vector2):
-    active = !active
-    if active:
-        show_menu(position)
-    else:
-        hide_menu()
+func toggle_menu(player:int, position:Vector2):
+    if player == player_index:
+        active = !active
+        if active:
+            show_menu(position)
+        else:
+            hide_menu()
 
 
 func show_menu(position):
@@ -67,18 +75,18 @@ func _on_Tween_tween_all_completed():
 
 
 func _on_Regroup_pressed():
-    InputHandler.order_squad(1,"regroup")
+    InputHandler.order_squad(player_index,"regroup")
     active = false
     hide_menu()
 
 
 func _on_Go_pressed():
-    InputHandler.order_squad(1,"move_squad")
+    InputHandler.order_squad(player_index,"move_squad")
     active = false
     hide_menu()
 
 
 func _on_Attack_pressed():
-    InputHandler.order_squad(1,"attack")
+    InputHandler.order_squad(player_index,"attack")
     active = false
     hide_menu()

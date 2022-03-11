@@ -15,14 +15,13 @@ func _ready():
     rng.randomize()
     squad_1 = squad_factory.instance()
     squad_2 = squad_factory.instance()
-
+    squad_1.set_player_index(1)
+    squad_2.set_player_index(1)
     add_child(squad_1)
     add_child(squad_2)
    
 
-    resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
-    $RadialMenu.set_up(resolution)
-    $RadialMenu.rect_global_position = resolution/2
+  
     #$Debugger.add_property(InputHandler, "squad_selected", "")
 
 

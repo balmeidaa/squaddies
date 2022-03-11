@@ -7,7 +7,7 @@ var lights = []
 
 func _ready():
     lights = [light_1, light_2]
-   # muzzle_off()
+    muzzle_off()
 
 func muzzle_off():
     particles.emitting = false

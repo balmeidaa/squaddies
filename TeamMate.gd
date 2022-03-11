@@ -1,5 +1,6 @@
 extends KinematicBody
 
+var player_index: int
 export var speed = 10
 export var gravity = -5
 
@@ -17,11 +18,12 @@ onready var logic_control = $LogicControl
 onready var debug_label = $Debug.get_node("Viewport/Label")
 
 func _ready():
-    InputHandler.connect("order_squad", self, "check_order")
+    pass
 
 func _move_to(delta):
     velocity.y += gravity * delta
     if target:
+        print(target)
         distance = transform.origin.distance_to(target)
         look_at(target, Vector3.UP)
         rotation.x = 0
@@ -44,7 +46,7 @@ func _attack():
     if enemy_target.size() > 0:
         var enemy_position = enemy_target[0].global_transform.origin
         look_at(enemy_position, Vector3.UP)
-        $FirePosition.fire()
+        $Gun.fire()
  
 func _reload():
     pass
@@ -73,18 +75,14 @@ func _should_follow():
 
 func follow_player_position():
     if _should_follow():
-        target = InputHandler.player_1_position
+        target = InputHandler.get_player_input(player_index, 'player_position')
         var distance = transform.origin.distance_to(target)   
         if distance != null and distance < 6:
             _stop_moving()
  
-func check_order(order):
-    match (order):
-        "regroup":
-            follow_player = true
-        _:
-            follow_player = false
+
        
+    
 func add_enemy_queue(body):
     if enemy_target.find(body) == -1:
         enemy_target.append(body)

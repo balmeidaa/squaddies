@@ -125,4 +125,4 @@ func _on_PatrolTimer_timeout():
         patrolling = true
     else:
         patrolling = false
-    print('patrolling:', patrolling)
+
