@@ -33,12 +33,6 @@ material = SubResource( 5 )
 script = ExtResource( 1 )
 dummy = ExtResource( 2 )
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7.52458, 16.7781 )
-current = true
-fov = 80.0
-near = 0.01
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
@@ -67,6 +61,11 @@ shadow_bias = -0.2
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 6 )
 material/0 = null
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7.52458, 16.7781 )
+fov = 80.0
+near = 0.01
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 3.10208 )

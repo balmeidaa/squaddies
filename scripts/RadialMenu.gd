@@ -67,18 +67,18 @@ func _on_Tween_tween_all_completed():
 
 
 func _on_Regroup_pressed():
-    InputHandler.order_squad("regroup")
+    InputHandler.order_squad(1,"regroup")
     active = false
     hide_menu()
 
 
 func _on_Go_pressed():
-    InputHandler.order_squad("move_squad")
+    InputHandler.order_squad(1,"move_squad")
     active = false
     hide_menu()
 
 
 func _on_Attack_pressed():
-    InputHandler.order_squad("attack")
+    InputHandler.order_squad(1,"attack")
     active = false
     hide_menu()

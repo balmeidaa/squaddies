@@ -11,7 +11,7 @@ func _ready():
         team.global_transform.origin = Vector3(x,y,z)
 
 func move_squad():
-    var move_position = InputHandler.get_squad_position()
+    var move_position = InputHandler.get_squad_position(1)
     for team in self.get_children():
         team.target = move_position
         
@@ -20,10 +20,10 @@ func regroup():
         team.follow_player = true
 
 func attack():
-    var enemy_target = InputHandler.get_target_enemy()
+    var enemy_target = InputHandler.get_target_enemy(1)
     if enemy_target:
         for team in self.get_children():
             team.add_enemy_queue(enemy_target)
-        InputHandler.set_target_enemy(null)
+        InputHandler.set_target_enemy(1,null)
     else:
         move_squad()
