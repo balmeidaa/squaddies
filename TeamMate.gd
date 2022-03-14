@@ -23,7 +23,6 @@ func _ready():
 func _move_to(delta):
     velocity.y += gravity * delta
     if target:
-        print(target)
         distance = transform.origin.distance_to(target)
         look_at(target, Vector3.UP)
         rotation.x = 0

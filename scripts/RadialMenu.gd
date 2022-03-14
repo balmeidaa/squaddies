@@ -16,7 +16,10 @@ var screen_size = Vector2.ZERO
 var player_index : int
 onready var parent = get_parent()
 
-# Called when the node enters the scene tree for the first time.
+onready var radio_in = preload("res://assets/sfx/radio_in.wav")
+onready var radio_out = preload("res://assets/sfx/radio_out.wav")
+    
+ 
 func _ready():
     player_index = parent.player_index
     var resolution = Vector2(get_viewport().size.x, get_viewport().size.y)
@@ -41,6 +44,8 @@ func toggle_menu(player:int, position:Vector2):
 
 
 func show_menu(position):
+    $AudioStream.stream = radio_in
+    
     var spacing = TAU / number_items
     position.x = clamp(position.x, min_x, (screen_size.x - max_x)) 
     position.y = clamp(position.y, min_y, (screen_size.y - max_y)) 
@@ -58,15 +63,17 @@ func show_menu(position):
                 Vector2(0.5, 0.5), Vector2.ONE, speed,
                 Tween.TRANS_LINEAR)
     $Tween.start()
+    $AudioStream.play()
     
 func hide_menu():
+    $AudioStream.stream = radio_out
     for buttons in $Control.get_children():
         $Tween.interpolate_property(buttons, "rect_position", buttons.rect_position,
                  Vector2.ZERO, speed, Tween.TRANS_BACK, Tween.EASE_IN)
         $Tween.interpolate_property(buttons, "rect_scale", null,
                 Vector2(0.5, 0.5), speed, Tween.TRANS_LINEAR)
     $Tween.start()
-
+    $AudioStream.play()
 
 func _on_Tween_tween_all_completed():
     if not active:

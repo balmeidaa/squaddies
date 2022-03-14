@@ -104,6 +104,8 @@ text = "Go"
 align = 1
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="AudioStream" type="AudioStreamPlayer" parent="."]
 [connection signal="pressed" from="Control/Regroup" to="." method="_on_Regroup_pressed"]
 [connection signal="pressed" from="Control/Attack" to="." method="_on_Attack_pressed"]
 [connection signal="pressed" from="Control/Go" to="." method="_on_Go_pressed"]
