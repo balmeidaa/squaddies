@@ -60,10 +60,11 @@ mesh = SubResource( 6 )
 material/0 = null
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7.52458, 16.7781 )
-fov = 80.0
+transform = Transform( 1, 0, 0, 0, 0.942174, 0.335123, 0, -0.335123, 0.942174, 0, 7.52458, 23.7995 )
+keep_aspect = 0
+fov = 88.6
 near = 0.01
+far = 500.0
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 3.10208 )
-[connection signal="body_entered" from="Marker/MarkedEnemy" to="." method="_on_MarkedEnemy_body_entered"]

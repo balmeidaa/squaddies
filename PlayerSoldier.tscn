@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Base_soldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/PlayerLogicControl.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://PlayerSoldier.gd" type="Script" id=6]
 [ext_resource path="res://DebugLabel.tscn" type="PackedScene" id=7]
 [ext_resource path="res://DummyGun.tscn" type="PackedScene" id=8]
+[ext_resource path="res://misc/Cursor.tscn" type="PackedScene" id=9]
 [ext_resource path="res://RadialMenu.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Animation" id=1]
@@ -71,4 +72,6 @@ autostart = true
 
 [node name="FirePosition" parent="." index="7" instance=ExtResource( 8 )]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.68892 )
+
+[node name="Cursor" parent="." index="8" instance=ExtResource( 9 )]
 [connection signal="timeout" from="DistanceTimer" to="." method="_on_DistanceTimer_timeout"]

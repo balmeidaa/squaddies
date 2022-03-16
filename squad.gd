@@ -2,7 +2,8 @@ extends Node
 const radius = 500.0
 const min_dist = 10
 const y = 0.019
-var player_index
+var player_index : int
+var player_teammates : String
 
 func _ready():
     randomize()
@@ -11,7 +12,9 @@ func _ready():
         var z = rand_range(-min_dist, min_dist)
         team.global_transform.origin = Vector3(x,y,z)
 
-func set_player_index(player):
+func set_up_squad(player):
+    var player_teammates = "team_{index}".format({"index":player})
+    add_to_group(player_teammates)
     player_index = player
     for team in self.get_children():
         team.player_index = player_index

@@ -12,7 +12,6 @@ Bullet = ExtResource( 2 )
 [node name="Timer" type="Timer" parent="."]
 
 [node name="ReloadTimer" type="Timer" parent="."]
-wait_time = 1.5
 one_shot = true
 
 [node name="Muzzle" parent="." instance=ExtResource( 1 )]
