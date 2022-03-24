@@ -6,7 +6,7 @@ export(PackedScene) var dummy
 const squad_factory = preload("Squad.tscn")
 var squad_1
 var squad_2
-var device_id
+
 onready var collison_marker = $Marker/MarkedEnemy/CollisionShape
 
 var rng = RandomNumberGenerator.new()
@@ -29,32 +29,11 @@ func _ready():
 func _joy_connection_changed(device_id:int, connected:bool):
     if connected:
         print('in')
-        self.device_id = device_id
+        $Player.device_id = device_id
     else:
-        self.device_id = -1
+        $Player.device_id = -1
 
-# input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-#    input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-#    input_vector = input_vector.normalized()
 
-#func _process(_delta):
-#    if Input.is_action_pressed("aim_down_p1"):
-#        print('aim_down_p1')
-#    if Input.is_action_pressed("aim_up_p1"):
-#        print('aim_up_p1')
-
-#
-#    if Input.is_action_pressed('squad_menu_p2'):
-#        print('squad_menu_p2')   
-#    if Input.is_action_pressed('select_squad_1_p2'):
-#        print('select_squad_1_p2')   
-#    if Input.is_action_pressed('select_squad_2_p2'):
-#        print('select_squad_2_p2')   
-#    if Input.is_action_pressed('select_team_p2'):
-#        print('select_team_p2')       
-#    if Input.is_action_pressed('fire_p2'):
-#        print('fire_p2')   
-        
 func _unhandled_input(event):
     #Debug purposes
     if event.is_action_pressed("ui_accept"):

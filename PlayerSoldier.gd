@@ -33,15 +33,18 @@ onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
 onready var cursor = $Cursor
 onready var debug_label = $Debug.get_node("Viewport/Label")
-
+#move marker inside player
 onready var marker = $'../Marker'
 onready var camera = $'../Camera' as Camera
 onready var squad_1 = $'../squad_1' 
 onready var squad_2 = $'../squad_2'
 var order_attack_active = false
 
-var device_id = 0
+var device_id = -1
 var player_teammates
+var position2D
+var marker_position
+var motion = Vector2.ZERO
 
 func _ready():
     
@@ -70,9 +73,20 @@ func _process(delta):
     velocity = Vector3.ZERO
     #check for controller 
     if device_id != -1:
+        # Character movement
         velocity.x = Input.get_action_strength(move_right_action) - Input.get_action_strength(move_left_action)
         velocity.z = Input.get_action_strength(move_down_action) - Input.get_action_strength(move_up_action) 
         velocity = velocity.normalized()
+
+        # Cursor movement
+        position2D = camera.convert_3dpos_to_2dpos(transform.origin)
+       
+        motion.x = Input.get_action_strength(aim_right) - Input.get_action_strength(aim_left)
+        motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
+        motion.normalized()
+
+        position2D.x += lerp(0, motion.x*100, 2)
+        position2D.y += lerp(0, motion.y*100, 2)
     else:
         if Input.is_action_pressed(move_right_action):
             velocity.x += 1
@@ -92,11 +106,19 @@ func _process(delta):
     if is_attacking:
         $FirePosition.fire()
         
+    if position2D:
+        marker_position = camera.convert_2dpos_to_3dpos(position2D)
+        cursor.set_cursor_position(position2D)  
+        camera.follow(transform.origin, position2D) 
+    
+    if marker_position:
+        player_look_at(marker_position)
+        
     move_and_slide(velocity)
+    
+   
 
 func _unhandled_input(event):
-    var marker_position
-    var position2D
     
     if event.is_action_pressed(fire_action):
         is_attacking = true
@@ -104,21 +126,8 @@ func _unhandled_input(event):
         is_attacking = false
     
     # Player is looking around/aiming
-    if event is InputEventMouse:
+    if event is InputEventMouse and device_id == -1:
         position2D = get_viewport().get_mouse_position()
-     
-       
-    elif device_id != -1 and event is InputEventJoypadMotion:
-        position2D = get_player_2Dposition()
-        position2D.x += (Input.get_action_strength(aim_right) - Input.get_action_strength(aim_left)) * 300
-        position2D.y += (Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)) * 300
-    
-    if position2D:
-        marker_position = get_3Dposition_from_2Dposition(position2D)
-        cursor.set_cursor_position(position2D)   
-    
-    if marker_position:
-        player_look_at(marker_position)
     
     ### Squad selection    
     if event.is_action_pressed(select_team):
@@ -128,12 +137,14 @@ func _unhandled_input(event):
     if event.is_action_pressed(select_squad_2):
         InputHandler.set_player_input(player_index, 'squad_selected', 2)
     
-    
+    ### Squad Order
     if event.is_action_pressed(squad_menu):
-        if device_id != -1:
-            InputHandler.toggle_radial_menu(player_index, event.position)
-            InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
-            marker.transform.origin = marker_position
+
+        InputHandler.toggle_radial_menu(player_index, position2D)
+        InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
+        marker.transform.origin = marker_position
+
+  
         
 func set_reload(reload:bool):
     reloading = reload
@@ -145,7 +156,6 @@ func _attack_status():
     return is_attacking
 
 func player_look_at(position:Vector3):
-    print(position)
     position.y = translation.y
     self.look_at(position, Vector3.UP)
 
@@ -207,11 +217,4 @@ func _on_MarkedEnemy_body_entered(body):
     if order_attack_active:
         InputHandler.set_player_input(player_index, 'target_enemy', body)
     
-func get_3Dposition_from_2Dposition(position2D: Vector2) -> Vector3:
-    var dropPlane  = Plane(Vector3(0, 1, 0), 0)
-    var from = camera.project_ray_origin(position2D)
-    var to = camera.project_ray_normal(position2D)
-    return dropPlane.intersects_ray(from,to)
 
-func get_player_2Dposition() -> Vector2:
-    return camera.unproject_position(transform.origin)
