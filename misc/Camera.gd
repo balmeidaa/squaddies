@@ -2,29 +2,34 @@ extends Camera
 
 export var shift_duration := .9
 export var max_offset_factor := 0.02
+export var max_distance := 3
 onready var tween = $ShiftTween
 var shift := Vector2.ZERO
+
 var camera_position:Vector3
 var camera_offset:Vector3
+var viewport_rect
+var dis
+var offset_res
+func _ready():
+     viewport_rect = -1 * get_viewport().size/2
 
 func _process(delta):
     camera_position = get_global_transform().origin 
 
 
 func follow(player_position: Vector3, cursor_position: Vector2):
-    var offset_res
-    var player_pos_2d = convert_3dpos_to_2dpos(player_position)
-    
-    var viewport_rect = -1 * get_viewport().size/2
-    
-    offset_res = (cursor_position + player_pos_2d)/2 + viewport_rect
-    camera_offset = camera_position
-    camera_offset.x += offset_res.x * max_offset_factor
-    camera_offset.z += offset_res.y * max_offset_factor
-
-    tween.interpolate_property(self, "translation", camera_position, camera_offset, 
-                            shift_duration, Tween.TRANS_QUINT, Tween.EASE_OUT)
-    tween.start()
+    dis = player_position.distance_to(camera_position)
+    if player_position.distance_to(camera_position) >= max_distance:
+        var player_pos_2d = convert_3dpos_to_2dpos(player_position)
+        
+        offset_res = (cursor_position + player_pos_2d)/2 + viewport_rect
+        camera_offset = camera_position
+        camera_offset.x += offset_res.x * max_offset_factor
+        camera_offset.z += offset_res.y * max_offset_factor
+        tween.interpolate_property(self, "translation", camera_position, camera_offset, 
+                                shift_duration, Tween.TRANS_QUINT, Tween.EASE_OUT)
+        tween.start()
     
     
  

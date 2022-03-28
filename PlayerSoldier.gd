@@ -18,6 +18,11 @@ var select_squad_2
 var select_team 
 var squad_menu 
 
+####
+var dash
+var use
+var reload_weap
+
 export var speed = 10
 export var gravity = -5
 
@@ -41,12 +46,15 @@ onready var squad_2 = $'../squad_2'
 var order_attack_active = false
 
 var device_id = -1
+var joypad_motion_factor := .05
 var player_teammates
 var position2D
 var marker_position
 var motion = Vector2.ZERO
+var last_motion = Vector2.ZERO
+func _ready(): 
 
-func _ready():
+    position2D = camera.convert_3dpos_to_2dpos(transform.origin)
     
     move_right_action = "right_p{n}".format({"n":player_index})
     move_left_action = "left_p{n}".format({"n":player_index})
@@ -77,16 +85,13 @@ func _process(delta):
         velocity.x = Input.get_action_strength(move_right_action) - Input.get_action_strength(move_left_action)
         velocity.z = Input.get_action_strength(move_down_action) - Input.get_action_strength(move_up_action) 
         velocity = velocity.normalized()
-
-        # Cursor movement
-        position2D = camera.convert_3dpos_to_2dpos(transform.origin)
        
         motion.x = Input.get_action_strength(aim_right) - Input.get_action_strength(aim_left)
         motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
         motion.normalized()
 
-        position2D.x += lerp(0, motion.x*100, 2)
-        position2D.y += lerp(0, motion.y*100, 2)
+        position2D.x += lerp(0, (motion.x) *400, joypad_motion_factor)
+        position2D.y += lerp(0, (motion.y) *400, joypad_motion_factor)
     else:
         if Input.is_action_pressed(move_right_action):
             velocity.x += 1
@@ -115,9 +120,9 @@ func _process(delta):
         player_look_at(marker_position)
         
     move_and_slide(velocity)
-    
-   
+ 
 
+   
 func _unhandled_input(event):
     
     if event.is_action_pressed(fire_action):

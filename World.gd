@@ -6,7 +6,7 @@ export(PackedScene) var dummy
 const squad_factory = preload("Squad.tscn")
 var squad_1
 var squad_2
-
+var device_id
 onready var collison_marker = $Marker/MarkedEnemy/CollisionShape
 
 var rng = RandomNumberGenerator.new()
@@ -21,12 +21,17 @@ func _ready():
     add_child(squad_2)
    
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
+
     if Input.get_connected_joypads().size() > 0:
-        self.device_id = Input.get_connected_joypads()[0]
+        $Player.device_id = Input.get_connected_joypads()[0]
+        
   
-    #$Debugger.add_property(InputHandler, "squad_selected", "")
+    $Debugger.add_property($Camera, "dis", "")
+    $Debugger.add_property($Player/Cursor, "position", "")
+    $Debugger.add_property($Player, "motion", "")
 
 func _joy_connection_changed(device_id:int, connected:bool):
+    print('000')
     if connected:
         print('in')
         $Player.device_id = device_id

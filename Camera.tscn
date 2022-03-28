@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://misc/Camera.gd" type="Script" id=1]
+
+[node name="Camera" type="Camera"]
+transform = Transform( 1, 0, 0, 0, 0.942174, 0.335123, 0, -0.335123, 0.942174, 0, 7.52458, 23.7995 )
+keep_aspect = 0
+fov = 88.6
+near = 0.01
+far = 500.0
+script = ExtResource( 1 )
+
+[node name="ShiftTween" type="Tween" parent="."]
