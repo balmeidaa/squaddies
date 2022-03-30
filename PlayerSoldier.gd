@@ -2,11 +2,16 @@ extends KinematicBody
 
 
 export var player_index := 1
+## Movement/Control
 var move_right_action
 var move_left_action
 var move_down_action
 var move_up_action
 var fire_action
+
+var dash
+var use
+var reload_weap
 
 var aim_up
 var aim_down
@@ -19,9 +24,6 @@ var select_team
 var squad_menu 
 
 ####
-var dash
-var use
-var reload_weap
 
 export var speed = 10
 export var gravity = -5
@@ -29,33 +31,40 @@ export var gravity = -5
 var target = null
 var velocity = Vector3()
 var distance = null
+## STATES
 var contact = false
 var is_moving = false
 var is_attacking = false
 var is_followed = false
 var reloading = false setget set_reload
+
 onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
 onready var cursor = $Cursor
 onready var debug_label = $Debug.get_node("Viewport/Label")
-#move marker inside player
-onready var marker = $'../Marker'
-onready var camera = $'../Camera' as Camera
+
+onready var marker = $Marker
+
+var camera
 onready var squad_1 = $'../squad_1' 
 onready var squad_2 = $'../squad_2'
 var order_attack_active = false
 
 var device_id = -1
 var joypad_motion_factor := .05
+var joypad_max_distance := 400
 var player_teammates
-var position2D
+var position2D = Vector2.ZERO
 var marker_position
 var motion = Vector2.ZERO
 var last_motion = Vector2.ZERO
-func _ready(): 
 
-    position2D = camera.convert_3dpos_to_2dpos(transform.origin)
-    
+
+func _ready(): 
+#    if position2D:
+ #   position2D = camera.convert_3dpos_to_2dpos(transform.origin)
+
+    marker.set_as_toplevel(true)
     move_right_action = "right_p{n}".format({"n":player_index})
     move_left_action = "left_p{n}".format({"n":player_index})
     move_down_action = "down_p{n}".format({"n":player_index})
@@ -90,8 +99,8 @@ func _process(delta):
         motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
         motion.normalized()
 
-        position2D.x += lerp(0, (motion.x) *400, joypad_motion_factor)
-        position2D.y += lerp(0, (motion.y) *400, joypad_motion_factor)
+        position2D.x += lerp(0, (motion.x) * joypad_max_distance, joypad_motion_factor)
+        position2D.y += lerp(0, (motion.y) * joypad_max_distance, joypad_motion_factor)
     else:
         if Input.is_action_pressed(move_right_action):
             velocity.x += 1
@@ -111,7 +120,7 @@ func _process(delta):
     if is_attacking:
         $FirePosition.fire()
         
-    if position2D:
+    if position2D != Vector2.ZERO:
         marker_position = camera.convert_2dpos_to_3dpos(position2D)
         cursor.set_cursor_position(position2D)  
         camera.follow(transform.origin, position2D) 
@@ -126,16 +135,19 @@ func _process(delta):
 func _unhandled_input(event):
     
     if event.is_action_pressed(fire_action):
+        print('fire')
         is_attacking = true
     if event.is_action_released(fire_action):
         is_attacking = false
     
     # Player is looking around/aiming
     if event is InputEventMouse and device_id == -1:
+        print('ajua')
         position2D = get_viewport().get_mouse_position()
     
     ### Squad selection    
     if event.is_action_pressed(select_team):
+        print('ajua 2')
         InputHandler.set_player_input(player_index, 'squad_selected', 0)      
     if event.is_action_pressed(select_squad_1):
         InputHandler.set_player_input(player_index, 'squad_selected', 1)   

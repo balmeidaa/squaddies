@@ -105,8 +105,8 @@ func _on_EnemyDetector_body_entered(body):
 func _on_EnemyDetector_body_exited(body):
     
     var index_array = enemy_target.find(body)
-    #(body.is_in_group("player") or body.is_in_group("squadteam")) and 
-    if index_array >= 0:
+   
+    if index_array >= 0 and not is_instance_valid(body):
         enemy_target.remove (index_array)
          
     if enemy_target.size() == 0:    
