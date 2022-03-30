@@ -33,7 +33,7 @@ func _ready():
     else:
 
         add_new_player(1)
-        add_new_player(2)
+        #add_new_player(2)
 
 #    $Debugger.add_property($Player/Camera, "dis", "")
 #    $Debugger.add_property($Player/Cursor, "position", "")

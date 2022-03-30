@@ -31,11 +31,20 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = null
 
-[node name="Control" type="Node" parent="."]
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Screen" type="VBoxContainer" parent="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -45,22 +54,28 @@ __meta__ = {
 [node name="Viewport1" type="ViewportContainer" parent="Control/Screen"]
 margin_right = 1024.0
 margin_bottom = 298.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Control/Screen/Viewport1"]
 size = Vector2( 1024, 298 )
+handle_input_locally = false
+render_target_update_mode = 3
 
 [node name="Viewport2" type="ViewportContainer" parent="Control/Screen"]
 margin_top = 302.0
 margin_right = 1024.0
 margin_bottom = 600.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
 [node name="Viewport" type="Viewport" parent="Control/Screen/Viewport2"]
 size = Vector2( 1024, 298 )
+handle_input_locally = false
+render_target_update_mode = 3
 
 [node name="Debugger" parent="." instance=ExtResource( 4 )]

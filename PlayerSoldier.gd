@@ -62,7 +62,7 @@ var last_motion = Vector2.ZERO
 
 func _ready(): 
 #    if position2D:
- #   position2D = camera.convert_3dpos_to_2dpos(transform.origin)
+    position2D = camera.convert_3dpos_to_2dpos(transform.origin)
 
     marker.set_as_toplevel(true)
     move_right_action = "right_p{n}".format({"n":player_index})
@@ -94,7 +94,7 @@ func _process(delta):
         velocity.x = Input.get_action_strength(move_right_action) - Input.get_action_strength(move_left_action)
         velocity.z = Input.get_action_strength(move_down_action) - Input.get_action_strength(move_up_action) 
         velocity = velocity.normalized()
-       
+       # Aim/ look around
         motion.x = Input.get_action_strength(aim_right) - Input.get_action_strength(aim_left)
         motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
         motion.normalized()
@@ -116,10 +116,30 @@ func _process(delta):
         velocity = velocity.normalized() * speed
     else:
         is_moving = false
+        
+    if Input.is_action_pressed(fire_action):
+        is_attacking = true
+    if Input.is_action_just_released(fire_action):
+        is_attacking = false
     
+   
+    ### Squad selection    
+    if Input.is_action_pressed(select_team):
+        InputHandler.set_player_input(player_index, 'squad_selected', 0)      
+    if Input.is_action_pressed(select_squad_1):
+        InputHandler.set_player_input(player_index, 'squad_selected', 1)   
+    if Input.is_action_pressed(select_squad_2):
+        InputHandler.set_player_input(player_index, 'squad_selected', 2)
+  
+    ### Squad Order
+    if Input.is_action_pressed(squad_menu):
+        InputHandler.toggle_radial_menu(player_index, position2D)
+        InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
+        marker.transform.origin = marker_position
+
     if is_attacking:
         $FirePosition.fire()
-        
+  
     if position2D != Vector2.ZERO:
         marker_position = camera.convert_2dpos_to_3dpos(position2D)
         cursor.set_cursor_position(position2D)  
@@ -133,33 +153,11 @@ func _process(delta):
 
    
 func _unhandled_input(event):
-    
-    if event.is_action_pressed(fire_action):
-        print('fire')
-        is_attacking = true
-    if event.is_action_released(fire_action):
-        is_attacking = false
-    
-    # Player is looking around/aiming
+
+    # Player is looking around/aiming using mouse
     if event is InputEventMouse and device_id == -1:
-        print('ajua')
         position2D = get_viewport().get_mouse_position()
     
-    ### Squad selection    
-    if event.is_action_pressed(select_team):
-        print('ajua 2')
-        InputHandler.set_player_input(player_index, 'squad_selected', 0)      
-    if event.is_action_pressed(select_squad_1):
-        InputHandler.set_player_input(player_index, 'squad_selected', 1)   
-    if event.is_action_pressed(select_squad_2):
-        InputHandler.set_player_input(player_index, 'squad_selected', 2)
-    
-    ### Squad Order
-    if event.is_action_pressed(squad_menu):
-
-        InputHandler.toggle_radial_menu(player_index, position2D)
-        InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
-        marker.transform.origin = marker_position
 
   
         
