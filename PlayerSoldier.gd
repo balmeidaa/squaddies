@@ -52,14 +52,18 @@ var order_attack_active = false
 
 var device_id = -1
 var joypad_motion_factor := .05
-var joypad_max_distance := 400
+var joypad_max_distance
 var player_teammates
 var position2D = Vector2.ZERO
 var marker_position
 var motion = Vector2.ZERO
 var last_motion = Vector2.ZERO
 
-
+func init_player(player_index:int, camera: Camera, device_id: int = -1):
+    self.camera = camera
+    self.player_index = player_index
+    self.device_id = device_id
+    
 func _ready(): 
 #    if position2D:
     position2D = camera.convert_3dpos_to_2dpos(transform.origin)
@@ -81,7 +85,7 @@ func _ready():
     select_team = "select_team_p{n}".format({"n":player_index})
     squad_menu = "squad_menu_p{n}".format({"n":player_index})
     
-
+    joypad_max_distance = get_viewport().size
     player_teammates = "team_{index}".format({"index":player_index})
     
     InputHandler.connect("order_squad", self, "execute_order_squad")
@@ -99,8 +103,8 @@ func _process(delta):
         motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
         motion.normalized()
 
-        position2D.x += lerp(0, (motion.x) * joypad_max_distance, joypad_motion_factor)
-        position2D.y += lerp(0, (motion.y) * joypad_max_distance, joypad_motion_factor)
+        position2D.x += lerp(0, (motion.x) * joypad_max_distance.x/2, joypad_motion_factor)
+        position2D.y += lerp(0, (motion.y) * joypad_max_distance.y, joypad_motion_factor)
     else:
         if Input.is_action_pressed(move_right_action):
             velocity.x += 1

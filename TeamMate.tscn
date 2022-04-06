@@ -32,9 +32,7 @@ tracks/0/keys = {
 [sub_resource type="ViewportTexture" id=3]
 viewport_path = NodePath("Debug/Viewport")
 
-[node name="TeamMate" groups=[
-"squadteam",
-] instance=ExtResource( 1 )]
+[node name="TeamMate" instance=ExtResource( 1 )]
 script = ExtResource( 10 )
 
 [node name="LogicControl" type="Spatial" parent="." index="0"]

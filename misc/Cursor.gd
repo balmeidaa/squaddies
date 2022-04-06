@@ -4,6 +4,7 @@ var viewport_rect
 
 func _ready():
     viewport_rect = get_viewport().size
+    print(viewport_rect)
 
 func set_cursor_position(new_position: Vector2):
     position.x = clamp(new_position.x, 0.0, viewport_rect.x)
