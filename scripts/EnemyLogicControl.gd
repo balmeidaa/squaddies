@@ -60,6 +60,16 @@ func _get_transition(delta):
             else:
                 return states.idle
 
+        states.chase:
+            if parent._should_move():
+                return states.move_to
+            elif parent._should_attack():
+                return states.attack
+            elif parent._should_chase():
+                return states.chase
+            else:
+                return states.idle
+        
         states.move_to, states.attack:
             if parent._should_reload():
                 return states.reload
@@ -72,15 +82,7 @@ func _get_transition(delta):
             else:
                 return states.idle
 
-        states.chase:
-            if parent._should_attack():
-                return states.attack
-            elif parent._should_move():
-                return states.move_to
-            elif parent._should_chase():
-                return states.chase
-            else:
-                return states.idle
+
 
         states.reload:
             if parent._should_reload():

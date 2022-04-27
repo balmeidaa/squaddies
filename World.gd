@@ -19,6 +19,8 @@ func _ready():
     rng.randomize()   
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
     screen.get_node("Viewport2").hide()
+    add_new_player(1, -1)
+    add_teammates(1)
 
 #    $Debugger.add_property($Player/Camera, "dis", "")
 #    $Debugger.add_property($Player/Cursor, "position", "")
@@ -52,7 +54,7 @@ func _joy_connection_changed(device_id:int, connected:bool):
 func plug_controller():
 
     if Input.get_connected_joypads().size() == 1:
-        add_new_player(1,0)
+        add_new_player(1)
         add_teammates(1)
         
     elif  Input.get_connected_joypads().size() == 2:
@@ -64,7 +66,7 @@ func plug_controller():
 
 func _unhandled_input(event):
     #Debug purposes
-    if event.is_action_pressed("ui_accept"):
+    if event.is_action_pressed("ui_select"):
         var new_dummy = dummy.instance()
         new_dummy.global_transform.origin = Vector3(rng.randf_range(-10.0, 10.0),0.02,rng.randf_range(-10.0, 10.0))
         add_child(new_dummy)

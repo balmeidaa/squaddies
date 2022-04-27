@@ -2,6 +2,7 @@ extends KinematicBody
 
 export var speed = 10
 export var gravity = -5
+var max_enemy_distance = 30
 
 export var hit_points = 100
 var target = null
@@ -38,17 +39,25 @@ func _stop_moving():
     velocity = Vector3.ZERO
 
 func _move_towards_enemy():
-    if not enemy_contact and enemy_target.size() > 0: 
+    if _should_chase() and enemy_target.size() > 0: 
         target = enemy_target[0].global_transform.origin
+       
 
 
 func _attack():
     find_next_target()
     if enemy_target.size() > 0:
         var enemy_position = enemy_target[0].global_transform.origin
-        look_at(enemy_position, Vector3.UP)
-        $FirePosition.fire()
- 
+        var enemy_distance = global_transform.origin.distance_to(enemy_position)
+        if enemy_distance <= max_enemy_distance:
+            look_at(enemy_position, Vector3.UP)
+            $FirePosition.fire()
+        else:
+            target = enemy_position
+            enemy_contact = false
+            chase_enemy = true
+            
+            
 func _set_patrol_position():
     var next_x = global_transform.origin.x + rng.randf_range(-10.0, 10.0)
     var next_z = global_transform.origin.x + rng.randf_range(-10.0, 10.0)
@@ -83,11 +92,12 @@ func _should_chase():
     return chase_enemy
        
 func add_enemy_queue(body):
-    if enemy_target.find(body) == -1:
+
+    var found = enemy_target.find(body)
+    #if enemy is a new one
+    if found == -1:
         enemy_target.append(body)
-        return true
     
-    return false
 
 func _update_animation():
     var keys_array = logic_control.states.keys()
@@ -99,17 +109,21 @@ func _update_animation():
 
 
 func _on_EnemyDetector_body_entered(body):
-    enemy_contact = add_enemy_queue(body)
-        
-
-func _on_EnemyDetector_body_exited(body):
+    add_enemy_queue(body)
+    enemy_contact = true
     
+
+func _on_EnemyDetector_body_exited(body): 
     var index_array = enemy_target.find(body)
-   
-    if index_array >= 0 and not is_instance_valid(body):
-        enemy_target.remove (index_array)
+    # if any else died remove from q
+    if index_array >= 0:
+        if not is_instance_valid(body):
+            enemy_target.remove (index_array)
+        else:
+            chase_enemy = true
          
-    if enemy_target.size() == 0:    
+    if enemy_target.size() == 0:
+        chase_enemy = false
         enemy_contact = false
 
 func _bullet_hit(bullet_damage):

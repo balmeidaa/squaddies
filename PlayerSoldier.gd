@@ -9,9 +9,17 @@ var move_down_action
 var move_up_action
 var fire_action
 
-var dash
-var use
-var reload_weap
+#pending
+var reload_weapon
+var roll
+
+var alternate_input = false
+var button_x #change weap/ order Attack
+var button_y #reload / order go
+
+var button_a #change item/regroup
+var button_b #use item/defend
+
 
 var aim_up
 var aim_down
@@ -52,12 +60,16 @@ var order_attack_active = false
 
 var device_id = -1
 var joypad_motion_factor := .05
-var joypad_max_distance
+var viewport_size
 var player_teammates
 var position2D = Vector2.ZERO
 var marker_position
 var motion = Vector2.ZERO
 var last_motion = Vector2.ZERO
+
+#animation
+onready var soldier_sprite = $Guy as Sprite3D
+var half_viewport
 
 func init_player(player_index:int, camera: Camera, device_id: int = -1):
     self.camera = camera
@@ -85,7 +97,13 @@ func _ready():
     select_team = "select_team_p{n}".format({"n":player_index})
     squad_menu = "squad_menu_p{n}".format({"n":player_index})
     
-    joypad_max_distance = get_viewport().size
+    button_x = "x_p{n}".format({"n":player_index})
+    button_y = "y_p{n}".format({"n":player_index})
+    button_a = "a_p{n}".format({"n":player_index})
+    button_b = "b_p{n}".format({"n":player_index})
+    
+    viewport_size = get_viewport().size
+    half_viewport = viewport_size/2
     player_teammates = "team_{index}".format({"index":player_index})
     
     InputHandler.connect("order_squad", self, "execute_order_squad")
@@ -103,9 +121,27 @@ func _process(delta):
         motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
         motion.normalized()
 
-        position2D.x += lerp(0, (motion.x) * joypad_max_distance.x/2, joypad_motion_factor)
-        position2D.y += lerp(0, (motion.y) * joypad_max_distance.y, joypad_motion_factor)
+        position2D.x += lerp(0, (motion.x) * viewport_size.x/2, joypad_motion_factor)
+        position2D.y += lerp(0, (motion.y) * viewport_size.y, joypad_motion_factor)
+        
+         #actions
+        if not alternate_input:
+    
+            if Input.is_action_pressed(button_x):
+                print('X')
+                pass #change weap
+            if Input.is_action_pressed(button_y):
+                print('Y')
+                $FirePosition.reload_weapon() #Change this later
+            if Input.is_action_pressed(button_a):
+                print('A')
+                pass #change item
+            if Input.is_action_pressed(button_b):
+                print('B')
+                pass #use item
+            
     else:
+        #movement
         if Input.is_action_pressed(move_right_action):
             velocity.x += 1
         if Input.is_action_pressed(move_left_action):
@@ -114,6 +150,8 @@ func _process(delta):
             velocity.z += 1
         if Input.is_action_pressed(move_up_action):
             velocity.z -= 1
+        
+
         
     if velocity.length() > 0:
         is_moving = true
@@ -125,21 +163,6 @@ func _process(delta):
         is_attacking = true
     if Input.is_action_just_released(fire_action):
         is_attacking = false
-    
-   
-    ### Squad selection    
-    if Input.is_action_pressed(select_team):
-        InputHandler.set_player_input(player_index, 'squad_selected', 0)      
-    if Input.is_action_pressed(select_squad_1):
-        InputHandler.set_player_input(player_index, 'squad_selected', 1)   
-    if Input.is_action_pressed(select_squad_2):
-        InputHandler.set_player_input(player_index, 'squad_selected', 2)
-  
-    ### Squad Order
-    if Input.is_action_pressed(squad_menu):
-        InputHandler.toggle_radial_menu(player_index, position2D)
-        InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
-        marker.transform.origin = marker_position
 
     if is_attacking:
         $FirePosition.fire()
@@ -152,15 +175,38 @@ func _process(delta):
     if marker_position:
         player_look_at(marker_position)
         
+    flip_sprite()    
     move_and_slide(velocity)
  
-
-   
+func flip_sprite():
+    if position2D.x < half_viewport.x:
+        soldier_sprite.flip_h = true
+    elif position2D.x > half_viewport.x:
+        soldier_sprite.flip_h = false
+        
+        
 func _unhandled_input(event):
 
     # Player is looking around/aiming using mouse
     if event is InputEventMouse and device_id == -1:
         position2D = get_viewport().get_mouse_position()
+    
+        ### Squad selection    
+    if Input.is_action_pressed(select_team):
+        InputHandler.set_player_input(player_index, 'squad_selected', 0)      
+    if Input.is_action_pressed(select_squad_1):
+        InputHandler.set_player_input(player_index, 'squad_selected', 1)   
+    if Input.is_action_pressed(select_squad_2):
+        InputHandler.set_player_input(player_index, 'squad_selected', 2)
+  
+    ### Squad Order
+    if Input.is_action_pressed(squad_menu):
+        if device_id > -1:
+            alternate_input = !alternate_input 
+
+        InputHandler.toggle_radial_menu(player_index, position2D)
+        InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
+        marker.transform.origin = marker_position
     
 
   
@@ -183,6 +229,7 @@ func _update_animation():
     var keys_array = logic_control.states.keys()
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
+    debug_label.text = animation
 #    if debug_label != null:
 #        debug_label.text = animation
     anim_player.set_animation(animation)

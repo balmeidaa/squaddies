@@ -12,6 +12,10 @@ var follow_player = false
 var enemy_contact = false
 var enemy_target = []
 var reloading = false setget set_reload
+var defend = false
+var chase_enemy = false
+
+var max_enemy_distance = 30
 
 onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
@@ -36,7 +40,7 @@ func _stop_moving():
     velocity = Vector3.ZERO
 
 func _move_towards_enemy():
-    if not enemy_contact and enemy_target.size() > 0: 
+     if _should_chase() and enemy_target.size() > 0:  
         target = enemy_target[0].global_transform.origin
 
 
@@ -44,8 +48,15 @@ func _attack():
     find_next_target()
     if enemy_target.size() > 0:
         var enemy_position = enemy_target[0].global_transform.origin
-        look_at(enemy_position, Vector3.UP)
-        $Gun.fire()
+        var enemy_distance = global_transform.origin.distance_to(enemy_position)
+        
+        if enemy_distance <= max_enemy_distance:
+            look_at(enemy_position, Vector3.UP)
+            $FirePosition.fire()
+        else:
+            target = enemy_position
+            enemy_contact = false
+            chase_enemy = true
  
 func _reload():
     pass
@@ -72,6 +83,9 @@ func _should_attack():
 func _should_follow():
     return follow_player
 
+func _should_chase():
+    return chase_enemy
+    
 func follow_player_position():
     if _should_follow():
         target = InputHandler.get_player_input(player_index, 'player_position')
@@ -83,11 +97,10 @@ func follow_player_position():
        
     
 func add_enemy_queue(body):
-    if enemy_target.find(body) == -1:
+    var found = enemy_target.find(body)
+
+    if found == -1:
         enemy_target.append(body)
-        return true
-    
-    return false
 
 func _update_animation():
     var keys_array = logic_control.states.keys()
@@ -103,18 +116,22 @@ func _on_Area_body_entered(_body):
         _stop_moving()
     
 
-func _on_EnemyDetector_body_entered(body):
-    if body.is_in_group("enemy"):           
-        enemy_contact = add_enemy_queue(body)
+func _on_EnemyDetector_body_entered(body):         
+    add_enemy_queue(body)
+    enemy_contact = true
         
 
-func _on_EnemyDetector_body_exited(body):
-    
+func _on_EnemyDetector_body_exited(body): 
     var index_array = enemy_target.find(body)
-    if body.is_in_group("enemy") and index_array >= 0:
-        enemy_target.remove (index_array)
+    # if any else died remove from q
+    if index_array >= 0:
+        if not is_instance_valid(body):
+            enemy_target.remove (index_array)
+        else:
+            chase_enemy = true
          
-    if enemy_target.size() == 0:    
+    if enemy_target.size() == 0:
+        chase_enemy = false
         enemy_contact = false
 
 func _bullet_hit(bullet_damage):

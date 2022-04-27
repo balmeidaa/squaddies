@@ -67,7 +67,7 @@ script = ExtResource( 5 )
 [node name="Debug" parent="." index="6" instance=ExtResource( 7 )]
 texture = SubResource( 3 )
 
-[node name="Gun" parent="." index="7" instance=ExtResource( 8 )]
+[node name="FirePosition" parent="." index="7" instance=ExtResource( 8 )]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
 [connection signal="body_exited" from="EnemyDetector" to="." method="_on_EnemyDetector_body_exited"]

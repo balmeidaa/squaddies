@@ -20,9 +20,7 @@ func _ready():
     
 func fire():
     if ammo <= 0 and not reloading:
-        reloading = true
-        parent.set_reload(reloading)
-        reload_timer.start()
+        reload_weapon()
     elif can_shoot and ammo > 0:
         var new_bullet = Bullet.instance()
         new_bullet.global_transform = global_transform
@@ -34,6 +32,11 @@ func fire():
         rof_timer.start()
         ammo -= 3
 
+
+func reload_weapon():
+    reloading = true
+    parent.set_reload(reloading)
+    reload_timer.start()
  
 func _on_ReloadTimer_timeout():
     ammo = 30

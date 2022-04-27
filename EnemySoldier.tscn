@@ -46,7 +46,7 @@ collision_layer = 0
 collision_mask = 9
 
 [node name="CollisionShape" type="CollisionShape" parent="EnemyDetector" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+transform = Transform( 0.7, 0, 0, 0, 1, 0, 0, 0, 0.7, 0, 1, 0 )
 shape = SubResource( 4 )
 
 [node name="Debug" parent="." index="4" instance=ExtResource( 3 )]

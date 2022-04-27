@@ -1,19 +1,17 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Viewport.gd" type="Script" id=1]
+[ext_resource path="res://UIRadialMenuFont.tres" type="DynamicFontData" id=2]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")
 
-[sub_resource type="DynamicFontData" id=2]
-font_path = "res://Comic Shark.ttf"
-
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=2]
 size = 50
 outline_size = 4
 outline_color = Color( 0.0431373, 0.00392157, 0.00392157, 1 )
 use_filter = true
-font_data = SubResource( 2 )
+font_data = ExtResource( 2 )
 
 [node name="Debug" type="Sprite3D"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40212, 0 )
@@ -31,7 +29,7 @@ script = ExtResource( 1 )
 margin_right = 600.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 200, 50 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.972549, 0.937255, 0.937255, 1 )
 text = "Long Text for debug"
 align = 1
