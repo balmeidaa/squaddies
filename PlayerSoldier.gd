@@ -10,8 +10,8 @@ var move_up_action
 var fire_action
 
 #pending
-var reload_weapon
-var roll
+var reload_action
+var roll_action
 
 var alternate_input = false
 var button_x #change weap/ order Attack
@@ -44,7 +44,7 @@ var contact = false
 var is_moving = false
 var is_attacking = false
 var is_followed = false
-var reloading = false setget set_reload
+var reloading = false setget set_reload, get_reload
 
 onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
@@ -86,6 +86,7 @@ func _ready():
     move_down_action = "down_p{n}".format({"n":player_index})
     move_up_action = "up_p{n}".format({"n":player_index})
     fire_action = "fire_p{n}".format({"n":player_index})
+    reload_action = "reload_p{n}".format({"n":player_index})
     
     aim_up = "aim_up_p{n}".format({"n":player_index})
     aim_down = "aim_down_p{n}".format({"n":player_index})
@@ -150,7 +151,9 @@ func _process(delta):
             velocity.z += 1
         if Input.is_action_pressed(move_up_action):
             velocity.z -= 1
-        
+            
+    if Input.is_action_pressed(reload_action):
+         $FirePosition.reload_weapon()
 
         
     if velocity.length() > 0:
@@ -213,6 +216,9 @@ func _unhandled_input(event):
         
 func set_reload(reload:bool):
     reloading = reload
+
+func get_reload():
+    return reloading
 
 func _move_status():
     return is_moving

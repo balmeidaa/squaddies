@@ -9,16 +9,6 @@ func _ready():
     call_deferred("set_state", states.idle)
     
 func _state_logic(delta):
-    pass
-#    if states.move_to and parent._move_status():
-#        parent._move_to(delta)
-#
-#    if states.attack  and parent._attack_status():
-#        parent._attack()
-#
-#    if states.idle:
-#        pass
-    
     parent._update_animation()
             
 func _get_transition(delta):
@@ -28,13 +18,17 @@ func _get_transition(delta):
                 return states.move_to
             elif parent._attack_status():
                 return states.attack
+            elif parent.get_reload():
+                return states.reload
             else:
                 return states.idle
-        states.move_to,states.attack:
+        states.move_to,states.attack,states.reload:
             if parent._move_status() and parent._attack_status():
                 return states.moving_attack
             elif parent._move_status():
                 return states.move_to
+            elif parent.get_reload():
+                return states.reload
             elif parent._attack_status():
                 return states.attack
             else:
