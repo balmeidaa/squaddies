@@ -1,16 +1,16 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Base_soldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugLabel.tscn" type="PackedScene" id=2]
-[ext_resource path="res://weapons/DummyGun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://misc/Cursor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI HUD/RadialMenu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://misc/AnimationHandlerTeam.gd" type="Script" id=6]
 [ext_resource path="res://scripts/PlayerLogicControl.gd" type="Script" id=7]
 [ext_resource path="res://squad mates/PlayerSoldier.gd" type="Script" id=8]
-[ext_resource path="res://assets/sprites/gun.png" type="Texture" id=9]
-[ext_resource path="res://assets/sprites/soldier.png" type="Texture" id=10]
+[ext_resource path="res://squad mates/soldier.png" type="Texture" id=10]
 [ext_resource path="res://misc/Marker.tscn" type="PackedScene" id=11]
+
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.23102
@@ -37,18 +37,6 @@ resource_name = "move_to"
 [sub_resource type="Animation" id=4]
 resource_name = "reload"
 length = 0.6
-tracks/0/type = "value"
-tracks/0/path = NodePath("Guy/Gun:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 60, 0, 60 ), Vector3( 0, 0, 0 ) ]
-}
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Debug/Viewport")
@@ -65,41 +53,36 @@ transform = Transform( -9.77524e-08, 0, 0.6, 0, 0.6, 0, -0.6, 0, -9.77524e-08, 0
 billboard = 1
 texture = ExtResource( 10 )
 
-[node name="Gun" type="Sprite3D" parent="Guy" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51611, -0.40823, 0.292817 )
-texture = ExtResource( 9 )
-
-[node name="FirePosition" parent="." index="1" instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.0220031, 1.19965, -3.53719 )
-
-[node name="LogicControl" type="Spatial" parent="." index="2"]
+[node name="LogicControl" type="Spatial" parent="." index="1"]
 transform = Transform( 1, 0, 7.44047e-22, 0, 1, 0, 7.44048e-22, 0, 1, 0, 0, 0 )
 script = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="." index="3"]
+[node name="CollisionShape" type="CollisionShape" parent="." index="2"]
 transform = Transform( -0.6, -2.33649e-07, 1.02131e-14, 0, -2.62268e-08, -0.6, 2.33649e-07, -0.6, 2.62268e-08, 0, 1.36698, 0 )
 shape = SubResource( 1 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 autoplay = "idle"
 anims/idle = SubResource( 2 )
 anims/move_to = SubResource( 3 )
 anims/reload = SubResource( 4 )
 script = ExtResource( 6 )
 
-[node name="Debug" parent="." index="5" instance=ExtResource( 2 )]
+[node name="Debug" parent="." index="4" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.18168, 0 )
 visible = false
 texture = SubResource( 5 )
 
-[node name="DistanceTimer" type="Timer" parent="." index="6"]
+[node name="DistanceTimer" type="Timer" parent="." index="5"]
 wait_time = 0.8
 autostart = true
 
-[node name="RadialMenu" parent="." index="7" instance=ExtResource( 5 )]
+[node name="RadialMenu" parent="." index="6" instance=ExtResource( 5 )]
 
-[node name="Cursor" parent="." index="8" instance=ExtResource( 4 )]
+[node name="Cursor" parent="." index="7" instance=ExtResource( 4 )]
 
-[node name="Marker" parent="." index="9" instance=ExtResource( 11 )]
-visible = false
+[node name="Marker" parent="." index="8" instance=ExtResource( 11 )]
+
+[node name="DefaultGun" parent="." index="9" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.318468, 1.32536, -2.14392 )
 [connection signal="timeout" from="DistanceTimer" to="." method="_on_DistanceTimer_timeout"]

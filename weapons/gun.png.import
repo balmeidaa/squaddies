@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/soldier.png-b3c8a45b7092cb6ceefbe6594e43d499.s3tc.stex"
-path.etc2="res://.import/soldier.png-b3c8a45b7092cb6ceefbe6594e43d499.etc2.stex"
+path.s3tc="res://.import/gun.png-27622bb3eaa3cdf86b215036183143d6.s3tc.stex"
+path.etc2="res://.import/gun.png-27622bb3eaa3cdf86b215036183143d6.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/sprites/soldier.png"
-dest_files=[ "res://.import/soldier.png-b3c8a45b7092cb6ceefbe6594e43d499.s3tc.stex", "res://.import/soldier.png-b3c8a45b7092cb6ceefbe6594e43d499.etc2.stex" ]
+source_file="res://weapons/gun.png"
+dest_files=[ "res://.import/gun.png-27622bb3eaa3cdf86b215036183143d6.s3tc.stex", "res://.import/gun.png-27622bb3eaa3cdf86b215036183143d6.etc2.stex" ]
 
 [params]
 

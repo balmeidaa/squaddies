@@ -3,12 +3,14 @@
 [ext_resource path="res://Base_soldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://enemies/EnemyDetector.tscn" type="PackedScene" id=2]
 [ext_resource path="res://DebugLabel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://weapons/DummyGun.tscn" type="PackedScene" id=4]
+[ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=4]
 [ext_resource path="res://squad mates/SoldierMesh.tres" type="PrismMesh" id=5]
 [ext_resource path="res://squad mates/SoldierCollision.tres" type="Shape" id=6]
 [ext_resource path="res://misc/AnimationHandlerTeam.gd" type="Script" id=7]
 [ext_resource path="res://scripts/TeamLogic.gd" type="Script" id=8]
 [ext_resource path="res://squad mates/TeamMate.gd" type="Script" id=9]
+
+
 
 
 

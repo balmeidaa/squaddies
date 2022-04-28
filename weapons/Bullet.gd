@@ -3,10 +3,14 @@ extends Spatial
 var BULLET_SPEED = 30
 var BULLET_DAMAGE = 15
 
-const KILL_TIME = 4
+var KILL_TIME = 4
 var timer = 0
  
-
+func init_bullet(damage,speed,fly_time):
+    BULLET_DAMAGE = damage
+    BULLET_SPEED = speed
+    KILL_TIME = fly_time
+    
 
 func _physics_process(delta):
     var forward_direction = global_transform.basis.z.normalized()

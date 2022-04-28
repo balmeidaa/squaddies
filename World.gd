@@ -19,7 +19,7 @@ func _ready():
     rng.randomize()   
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
     screen.get_node("Viewport2").hide()
-    add_new_player(1, 0)
+    add_new_player(1)
     add_teammates(1)
 
 #    $Debugger.add_property($Player/Camera, "dis", "")

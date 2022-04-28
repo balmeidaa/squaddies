@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://weapons/FireParticles.tscn" type="PackedScene" id=1]
+[ext_resource path="res://weapons/Bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://weapons/FirePosition.gd" type="Script" id=3]
+[ext_resource path="res://weapons/gun.png" type="Texture" id=4]
+
+
+[node name="DefaultGun" type="Spatial"]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.45221 )
+script = ExtResource( 3 )
+Bullet = ExtResource( 2 )
+
+[node name="RofTimer" type="Timer" parent="."]
+
+[node name="ReloadTimer" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[node name="Muzzle" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 2.35885e-08, 0.064, -0.348393 )
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.00399e-08, 0.0640417, -0.276331 )
+
+[node name="GunSprite" type="Sprite3D" parent="."]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 4.68421e-07, -0.209624, -1.43758 )
+texture = ExtResource( 4 )
+[connection signal="timeout" from="RofTimer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]

@@ -4,7 +4,9 @@
 [ext_resource path="res://enemies/EnemySoldier.gd" type="Script" id=2]
 [ext_resource path="res://DebugLabel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/EnemyLogicControl.gd" type="Script" id=4]
-[ext_resource path="res://weapons/DummyGun.tscn" type="PackedScene" id=5]
+[ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=5]
+
+
 
 
 

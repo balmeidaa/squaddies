@@ -133,7 +133,7 @@ func _process(delta):
                 pass #change weap
             if Input.is_action_pressed(button_y):
                 print('Y')
-                $FirePosition.reload_weapon() #Change this later
+                $DefaultGun.reload_weapon() #Change this later
             if Input.is_action_pressed(button_a):
                 print('A')
                 pass #change item
@@ -153,7 +153,7 @@ func _process(delta):
             velocity.z -= 1
             
     if Input.is_action_pressed(reload_action):
-         $FirePosition.reload_weapon()
+         $DefaultGun.reload_weapon()
 
         
     if velocity.length() > 0:
@@ -168,7 +168,7 @@ func _process(delta):
         is_attacking = false
 
     if is_attacking:
-        $FirePosition.fire()
+        $DefaultGun.fire()
   
     if position2D != Vector2.ZERO:
         marker_position = camera.convert_2dpos_to_3dpos(position2D)
