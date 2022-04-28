@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://DebugStats.gd" type="Script" id=1]
+[ext_resource path="res://misc/DebugStats.gd" type="Script" id=1]
 
 [node name="Debugger" type="MarginContainer"]
 margin_right = 40.0

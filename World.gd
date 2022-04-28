@@ -3,9 +3,9 @@ extends Spatial
 var resolution
 
 export(PackedScene) var dummy
-const squad_factory = preload("Squad.tscn")
+const squad_factory = preload("squad mates/Squad.tscn")
 const camera_factory = preload("misc/Camera.tscn")
-const player_factory = preload("PlayerSoldier.tscn")
+const player_factory = preload("squad mates/PlayerSoldier.tscn")
 
 var squad_1
 var squad_2
@@ -19,7 +19,7 @@ func _ready():
     rng.randomize()   
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
     screen.get_node("Viewport2").hide()
-    add_new_player(1, -1)
+    add_new_player(1, 0)
     add_teammates(1)
 
 #    $Debugger.add_property($Player/Camera, "dis", "")
