@@ -34,7 +34,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "move_to"
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "reload"
 length = 0.6
 tracks/0/type = "value"
@@ -50,48 +50,48 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 60, 0, 60 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="ViewportTexture" id=4]
+[sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Debug/Viewport")
 
 [node name="Player" groups=[
 "player",
 ] instance=ExtResource( 1 )]
-transform = Transform( 0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, 0.939693, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 collision_layer = 8
 collision_mask = 23
 script = ExtResource( 6 )
 
 [node name="Guy" type="Sprite3D" parent="." index="0"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 1.99807, 0 )
+transform = Transform( -9.77524e-08, 0, 0.6, 0, 0.6, 0, -0.6, 0, -9.77524e-08, 0, 1.36698, 0 )
 billboard = 1
 texture = ExtResource( 12 )
 
 [node name="Gun" type="Sprite3D" parent="Guy" index="0"]
-transform = Transform( 0.939693, -0.34202, 0, 0.321394, 0.883022, -0.34202, 0.116978, 0.321394, 0.939693, 1.51611, -0.40823, 0.292817 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51611, -0.40823, 0.292817 )
 texture = ExtResource( 3 )
 
 [node name="FirePosition" parent="." index="1" instance=ExtResource( 8 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.290907, 1.84659, -3.74905 )
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.0220031, 1.19965, -3.53719 )
 
 [node name="LogicControl" type="Spatial" parent="." index="2"]
 transform = Transform( 1, 0, 7.44047e-22, 0, 1, 0, 7.44048e-22, 0, 1, 0, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="." index="3"]
-transform = Transform( -1, -3.25841e-07, 5.30863e-14, -2.22045e-16, -1.62516e-07, -1, 3.25841e-07, -1, 1.62516e-07, 0, 1.97238, 0 )
-visible = false
+transform = Transform( -0.6, -2.33649e-07, 1.02131e-14, 0, -2.62268e-08, -0.6, 2.33649e-07, -0.6, 2.62268e-08, 0, 1.36698, 0 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 autoplay = "idle"
 anims/idle = SubResource( 2 )
 anims/move_to = SubResource( 3 )
-anims/reload = SubResource( 5 )
+anims/reload = SubResource( 4 )
 script = ExtResource( 5 )
 
 [node name="Debug" parent="." index="5" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.18168, 0 )
-texture = SubResource( 4 )
+visible = false
+texture = SubResource( 5 )
 
 [node name="DistanceTimer" type="Timer" parent="." index="6"]
 wait_time = 0.8
