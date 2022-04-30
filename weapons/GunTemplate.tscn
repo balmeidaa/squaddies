@@ -5,7 +5,6 @@
 [ext_resource path="res://weapons/FirePosition.gd" type="Script" id=3]
 [ext_resource path="res://weapons/gun.png" type="Texture" id=4]
 
-
 [node name="DefaultGun" type="Spatial"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.45221 )
 script = ExtResource( 3 )
@@ -18,13 +17,13 @@ wait_time = 0.6
 one_shot = true
 
 [node name="Muzzle" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 2.35885e-08, 0.064, -0.348393 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -2.64841e-07, -0.424485, 0.536791 )
 
 [node name="Position3D" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.00399e-08, 0.0640417, -0.276331 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98389e-07, -0.424443, 0.608853 )
 
 [node name="GunSprite" type="Sprite3D" parent="."]
-transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 4.68421e-07, -0.209624, -1.43758 )
+transform = Transform( -1.14044e-07, 0, -0.7, 0, 0.7, 0, 0.7, 0, -1.14044e-07, 1.79992e-07, -0.698109, -0.552396 )
 texture = ExtResource( 4 )
 [connection signal="timeout" from="RofTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]

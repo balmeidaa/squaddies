@@ -1,21 +1,28 @@
 extends Spatial
 
-export(PackedScene) var Bullet
+
 
 onready var rof_timer = $RofTimer as Timer
 onready var reload_timer = $ReloadTimer
 var can_shoot = true
 
+export var gun_name = "Pistol"
+export(PackedScene) var Bullet
 export var max_ammo = 30
 export var bullet_speed = 30
 export var bullet_damage = 15
 export var fly_time = 4
 export var millis_between_shots = 100
-onready var parent = get_parent()
+onready var holder = get_parent().get_parent() #null
 var current_ammo = max_ammo
 
 var reloading = false
-#refactor to weapon scene
+
+#despes
+func set_owner(weapon_holder):
+    holder = weapon_holder
+    
+
 func _ready():
     rof_timer.wait_time = millis_between_shots / 1000.0
     rof_timer.start()
@@ -39,13 +46,13 @@ func fire():
 
 func reload_weapon():
     reloading = true
-    parent.set_reload(reloading)
+    holder.set_reload(reloading)
     reload_timer.start()
  
 func _on_ReloadTimer_timeout():
     current_ammo = 30
     reloading = false
-    parent.set_reload(reloading)
+    holder.set_reload(reloading)
 
 
 func _on_Timer_timeout():

@@ -2,15 +2,14 @@
 
 [ext_resource path="res://Base_soldier.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DebugLabel.tscn" type="PackedScene" id=2]
-[ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=3]
 [ext_resource path="res://misc/Cursor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI HUD/RadialMenu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://misc/AnimationHandlerTeam.gd" type="Script" id=6]
 [ext_resource path="res://scripts/PlayerLogicControl.gd" type="Script" id=7]
 [ext_resource path="res://squad mates/PlayerSoldier.gd" type="Script" id=8]
+[ext_resource path="res://weapons/Pistol.tscn" type="PackedScene" id=9]
 [ext_resource path="res://squad mates/soldier.png" type="Texture" id=10]
 [ext_resource path="res://misc/Marker.tscn" type="PackedScene" id=11]
-
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 1.23102
@@ -59,6 +58,7 @@ script = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="." index="2"]
 transform = Transform( -0.6, -2.33649e-07, 1.02131e-14, 0, -2.62268e-08, -0.6, 2.33649e-07, -0.6, 2.62268e-08, 0, 1.36698, 0 )
+visible = false
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
@@ -69,7 +69,7 @@ anims/reload = SubResource( 4 )
 script = ExtResource( 6 )
 
 [node name="Debug" parent="." index="4" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.18168, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0854, 0 )
 visible = false
 texture = SubResource( 5 )
 
@@ -83,6 +83,8 @@ autostart = true
 
 [node name="Marker" parent="." index="8" instance=ExtResource( 11 )]
 
-[node name="DefaultGun" parent="." index="9" instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0.318468, 1.32536, -2.14392 )
+[node name="WeaponHolder" type="Position3D" parent="." index="9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.251757, 1.20142, 0 )
+
+[node name="Weapon" parent="WeaponHolder" index="0" instance=ExtResource( 9 )]
 [connection signal="timeout" from="DistanceTimer" to="." method="_on_DistanceTimer_timeout"]

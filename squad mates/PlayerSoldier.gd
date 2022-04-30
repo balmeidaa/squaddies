@@ -42,7 +42,7 @@ var distance = null
 ## STATES
 var contact = false
 var is_moving = false
-var is_attacking = false
+
 var is_followed = false
 var reloading = false setget set_reload, get_reload
 
@@ -50,12 +50,11 @@ onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
 onready var cursor = $Cursor
 onready var debug_label = $Debug.get_node("Viewport/Label")
-
+onready var weapon_holder = $WeaponHolder
 onready var marker = $Marker
 
 var camera
-onready var squad_1 = $'../squad_1' 
-onready var squad_2 = $'../squad_2'
+var squads = []
 var order_attack_active = false
 
 var device_id = -1
@@ -77,7 +76,7 @@ func init_player(player_index:int, camera: Camera, device_id: int = -1):
     self.device_id = device_id
     
 func _ready(): 
-#    if position2D:
+
     position2D = camera.convert_3dpos_to_2dpos(transform.origin)
 
     marker.set_as_toplevel(true)
@@ -133,7 +132,7 @@ func _process(delta):
                 pass #change weap
             if Input.is_action_pressed(button_y):
                 print('Y')
-                $DefaultGun.reload_weapon() #Change this later
+                weapon_holder.get_node("Weapon").reload_weapon() #Change this later
             if Input.is_action_pressed(button_a):
                 print('A')
                 pass #change item
@@ -153,27 +152,23 @@ func _process(delta):
             velocity.z -= 1
             
     if Input.is_action_pressed(reload_action):
-         $DefaultGun.reload_weapon()
+         weapon_holder.get_node("Weapon").reload_weapon()
 
         
     if velocity.length() > 0:
         is_moving = true
         velocity = velocity.normalized() * speed
+        
     else:
         is_moving = false
         
-    if Input.is_action_pressed(fire_action):
-        is_attacking = true
-    if Input.is_action_just_released(fire_action):
-        is_attacking = false
-
-    if is_attacking:
-        $DefaultGun.fire()
+    if Input.is_action_pressed(fire_action) and not alternate_input:
+        weapon_holder.get_node("Weapon").fire()
   
-    if position2D != Vector2.ZERO:
+    if position2D != null:
         marker_position = camera.convert_2dpos_to_3dpos(position2D)
         cursor.set_cursor_position(position2D)  
-        camera.follow(transform.origin, position2D) 
+
     
     if marker_position:
         player_look_at(marker_position)
@@ -222,9 +217,7 @@ func get_reload():
 
 func _move_status():
     return is_moving
-
-func _attack_status():
-    return is_attacking
+ 
 
 func player_look_at(position:Vector3):
     position.y = translation.y
@@ -263,13 +256,13 @@ func return_active_squad():
     # is_instance_valid
     match squad_name:
         "squad_1":
-            if is_instance_valid(squad_1):
-                return squad_1
+            if is_instance_valid(squads[0]):
+                return squads[0]
             else:
                 return null
         "squad_2":
-             if is_instance_valid(squad_2):
-                return squad_2
+             if is_instance_valid(squads[1]):
+                return squads[1]
              else:
                 return null
         _:
@@ -289,4 +282,5 @@ func _on_MarkedEnemy_body_entered(body):
     if order_attack_active:
         InputHandler.set_player_input(player_index, 'target_enemy', body)
     
-
+func add_squad(squad):
+    squads.append(squad)
