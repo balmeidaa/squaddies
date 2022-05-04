@@ -4,13 +4,14 @@
 [ext_resource path="res://weapons/pistol.png" type="Texture" id=2]
 
 [node name="Weapon" instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.56678 )
 
 [node name="Muzzle" parent="." index="2"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -3.43669e-08, -0.427167, -0.17053 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 2.94674e-08, -0.445904, -0.366436 )
 
-[node name="Position3D" parent="." index="3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2085e-08, -0.427125, -0.0984677 )
+[node name="FirePoint" parent="." index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6715e-08, -0.470001, -0.0819867 )
 
 [node name="GunSprite" parent="." index="4"]
-transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 2.9277e-07, -0.724867, -0.898512 )
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 3.26348e-07, -0.696756, -1.00156 )
 texture = ExtResource( 2 )

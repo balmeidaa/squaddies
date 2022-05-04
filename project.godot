@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "Gun",
+"language": "GDScript",
+"path": "res://weapons/GunScript.gd"
+}, {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://scripts/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Gun": "",
 "StateMachine": ""
 }
 

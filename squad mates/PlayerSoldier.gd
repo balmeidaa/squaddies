@@ -50,7 +50,7 @@ onready var anim_player = $AnimationPlayer
 onready var logic_control = $LogicControl
 onready var cursor = $Cursor
 onready var debug_label = $Debug.get_node("Viewport/Label")
-onready var weapon_holder = $WeaponHolder
+onready var weapon_controller = $WeaponController
 onready var marker = $Marker
 
 var camera
@@ -132,7 +132,7 @@ func _process(delta):
                 pass #change weap
             if Input.is_action_pressed(button_y):
                 print('Y')
-                weapon_holder.get_node("Weapon").reload_weapon() #Change this later
+                weapon_controller.hold_trigger() #Change this later
             if Input.is_action_pressed(button_a):
                 print('A')
                 pass #change item
@@ -152,7 +152,7 @@ func _process(delta):
             velocity.z -= 1
             
     if Input.is_action_pressed(reload_action):
-         weapon_holder.get_node("Weapon").reload_weapon()
+         weapon_controller.reload_weapon()
 
         
     if velocity.length() > 0:
@@ -163,7 +163,10 @@ func _process(delta):
         is_moving = false
         
     if Input.is_action_pressed(fire_action) and not alternate_input:
-        weapon_holder.get_node("Weapon").fire()
+        weapon_controller.hold_trigger()
+        
+    if check_release_trigger(Input):
+        weapon_controller.release_trigger()
   
     if position2D != null:
         marker_position = camera.convert_2dpos_to_3dpos(position2D)
@@ -176,6 +179,12 @@ func _process(delta):
     flip_sprite()    
     move_and_slide(velocity)
  
+
+func check_release_trigger(Input):
+    if Input.is_action_just_released(fire_action) or (Input.is_action_just_released(button_y) and device_id > -1):
+        return true
+    return false
+
 func flip_sprite():
     if position2D.x < half_viewport.x:
         soldier_sprite.flip_h = true

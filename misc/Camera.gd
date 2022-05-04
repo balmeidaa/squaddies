@@ -16,31 +16,25 @@ var old_player_pos = Vector3.ZERO
 var current_player_pos =  null
 
 var offset_res
+var align_first = false
 
 func _ready():
      viewport_rect = -1 * get_viewport().size/2
 
 func _process(delta):
+    if not align_first:
+        align_first = true
+        camera_position.x = following_player.translation.x
+    
     if following_player != null:
-  
-      
-        
-   
         current_player_pos = following_player.translation
-
-        
         
         if  current_player_pos !=  old_player_pos and not tween.is_active():        
-                print("dif:",(current_player_pos - old_player_pos))       
-                print("camera_position",camera_position)
-                print("camera_offset",camera_offset)
                 camera_position = get_global_transform().origin 
                 camera_offset = camera_position + (current_player_pos - old_player_pos)
                 old_player_pos = current_player_pos
                 tween_camera()
-    
-    
-    #print(player.transform.origin)
+
 
 func follow(player_position: Vector3, cursor_position: Vector2):
     var distance = player_position.distance_to(camera_position)
@@ -58,7 +52,7 @@ func follow(player_position: Vector3, cursor_position: Vector2):
     
 func assign_player(player):    
     following_player = player
-    
+
  
 func tween_camera():
     tween.interpolate_property(self, "translation", camera_position, camera_offset, 
