@@ -18,6 +18,7 @@ var reloading = false setget set_reload
 onready var logic_control = $LogicControl
 onready var debug_label = $Debug.get_node("Viewport/Label")
 
+onready var weapon_controller = $WeaponController
 var rng = RandomNumberGenerator.new()
 
 func _ready():
@@ -51,8 +52,11 @@ func _attack():
         var enemy_distance = global_transform.origin.distance_to(enemy_position)
         if enemy_distance <= max_enemy_distance:
             look_at(enemy_position, Vector3.UP)
-            $FirePosition.fire()
+            if weapon_controller.check_gun_type():
+                weapon_controller.release_trigger()
+            weapon_controller.hold_trigger()
         else:
+            weapon_controller.release_trigger()
             target = enemy_position
             enemy_contact = false
             chase_enemy = true

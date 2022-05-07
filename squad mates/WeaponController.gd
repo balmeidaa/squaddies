@@ -6,7 +6,6 @@ var weapon_inventory: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    print(default_gun)
     if default_gun:
         equip_weapon(default_gun)
         
@@ -25,3 +24,8 @@ func hold_trigger():
 func release_trigger():
     if equipped_weapon:
         equipped_weapon.release_trigger()
+
+func check_gun_type():
+    if equipped_weapon.fire_mode == equipped_weapon.FireMode.SINGLE or equipped_weapon.fire_mode == equipped_weapon.FireMode.BURST: 
+        return true
+    return false

@@ -9,7 +9,7 @@
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.48444 )
 script = ExtResource( 3 )
 Bullet = ExtResource( 2 )
-fire_mode = 0
+fire_mode = 1
 
 [node name="RofTimer" type="Timer" parent="."]
 

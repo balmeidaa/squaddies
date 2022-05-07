@@ -4,11 +4,7 @@
 [ext_resource path="res://enemies/EnemySoldier.gd" type="Script" id=2]
 [ext_resource path="res://DebugLabel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/EnemyLogicControl.gd" type="Script" id=4]
-[ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=5]
-
-
-
-
+[ext_resource path="res://weapons/WeaponController.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.909804, 0.101961, 0.101961, 1 )
@@ -61,7 +57,8 @@ texture = SubResource( 5 )
 wait_time = 3.0
 autostart = true
 
-[node name="FirePosition" parent="." index="6" instance=ExtResource( 5 )]
+[node name="WeaponController" parent="." index="6" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.251757, 0.719141, -0.765526 )
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
 [connection signal="body_exited" from="EnemyDetector" to="." method="_on_EnemyDetector_body_exited"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_PatrolTimer_timeout"]
