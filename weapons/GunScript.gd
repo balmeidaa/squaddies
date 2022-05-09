@@ -5,6 +5,8 @@ class_name Gun
 onready var rof_timer = $RofTimer as Timer
 onready var reload_timer = $ReloadTimer
 onready var fire_point = $FirePoint
+onready var muzzle = $Muzzle
+onready var shells = $Shells
 var can_shoot = true
 
 export var gun_name = "Pistol"
@@ -14,6 +16,7 @@ export var bullet_speed = 30
 export var bullet_damage = 15
 export var fly_time = 4
 export var millis_between_shots = 100
+export var shells_drops = 5
 var current_ammo = max_ammo
 
 var reloading = false
@@ -33,12 +36,14 @@ var remaining_burst_shots = burts_shots
 func _ready():
     rof_timer.wait_time = millis_between_shots / 1000.0
     rof_timer.start()
+    shells.set_shells_drop(shells_drops)
 
     
 func fire():
     
     if current_ammo <= 0 and not reloading:
         reload_weapon()
+        shells.stop()
         return false
         
     elif can_shoot and current_ammo > 0:
@@ -50,7 +55,8 @@ func fire():
         var scene_root = get_tree().get_root().get_children()[0]
         scene_root.add_child(new_bullet)
         can_shoot = false
-        $Muzzle.muzzle_on()
+        muzzle.muzzle_on()
+        shells.start()
         rof_timer.start()
         current_ammo -= 3
         return true
@@ -73,6 +79,7 @@ func hold_trigger():
 
 func release_trigger():
     trigger_released = true
+    shells.stop()
     resets_burst_shots()
 
 func reload_weapon():
@@ -89,5 +96,5 @@ func _on_ReloadTimer_timeout():
 
 
 func _on_Timer_timeout():
-    $Muzzle.muzzle_off()
+    muzzle.muzzle_off()
     can_shoot = true

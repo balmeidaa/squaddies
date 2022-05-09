@@ -1,4 +1,3 @@
-tool
 extends Spatial
 onready var particles = $Particles
 onready var light = $Particles/omni
