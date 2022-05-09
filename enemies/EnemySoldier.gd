@@ -121,7 +121,7 @@ func _on_EnemyDetector_body_exited(body):
     var index_array = enemy_target.find(body)
     # if any else died remove from q
     if index_array >= 0:
-        if not is_instance_valid(body):
+        if not is_instance_valid(body) or body.has_method("_is_alive"):
             enemy_target.remove (index_array)
         else:
             chase_enemy = true
@@ -135,7 +135,10 @@ func _bullet_hit(bullet_damage):
     if hit_points < 0:
         call_deferred("queue_free")
 
-    
+func _is_alive():
+    if hit_points <= 0:
+        return false
+    return true 
 
 
 func _on_PatrolTimer_timeout():

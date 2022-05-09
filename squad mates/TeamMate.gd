@@ -2,9 +2,9 @@ extends KinematicBody
 
 var player_index: int
 export var speed = 10
-export var gravity = -5
+var gravity = -5
 
-var hit_points = 100
+export var hit_points = 100
 var target = null
 var velocity = Vector3.ZERO
 var distance = null
@@ -127,12 +127,14 @@ func _on_EnemyDetector_body_entered(body):
         
 
 func _on_EnemyDetector_body_exited(body): 
+   
     var index_array = enemy_target.find(body)
     # if any else died remove from q
     if index_array >= 0:
-        if not is_instance_valid(body):
+        if not is_instance_valid(body) or body.has_method("_is_alive"):
             enemy_target.remove (index_array)
         else:
+
             chase_enemy = true
          
     if enemy_target.size() == 0:
@@ -141,6 +143,12 @@ func _on_EnemyDetector_body_exited(body):
 
 func _bullet_hit(bullet_damage):
     hit_points -= bullet_damage
-    $Debug/Viewport/Label.text = str(hit_points)
-    if hit_points < 0:
+    debug_label.text = str(hit_points)
+    if hit_points <= 0:
         call_deferred("queue_free")
+        
+func _is_alive():
+    if hit_points <= 0:
+        return false
+    return true
+    
