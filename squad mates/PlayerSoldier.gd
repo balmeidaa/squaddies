@@ -34,7 +34,10 @@ var squad_menu
 ####
 
 export var speed = 10
+export var max_health = 120
 export var gravity = -5
+
+var current_health = max_health
 
 var target = null
 var velocity = Vector3()
@@ -293,3 +296,13 @@ func _on_MarkedEnemy_body_entered(body):
     
 func add_squad(squad):
     squads.append(squad)
+
+func _pick_up_ammo(amount_ammo):
+    pass  
+    
+func _recieve_damage(damage):
+    current_health -= damage
+    debug_label.text = str(current_health)
+    if current_health <= 0:
+        #play dead animation
+        call_deferred("queue_free")

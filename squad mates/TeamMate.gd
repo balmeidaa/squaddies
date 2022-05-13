@@ -141,8 +141,8 @@ func _on_EnemyDetector_body_exited(body):
         chase_enemy = false
         enemy_contact = false
 
-func _bullet_hit(bullet_damage):
-    hit_points -= bullet_damage
+func _recieve_damage(damage):
+    hit_points -= damage
     debug_label.text = str(hit_points)
     if hit_points <= 0:
         call_deferred("queue_free")

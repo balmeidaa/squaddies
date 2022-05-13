@@ -7,7 +7,9 @@ radial_segments = 50
 
 [sub_resource type="CapsuleShape" id=2]
 
-[node name="Bullet" type="Spatial"]
+[node name="Bullet" type="Spatial" groups=[
+"bullet",
+]]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]

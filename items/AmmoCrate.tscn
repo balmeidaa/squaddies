@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://items/ItemAmmo.gd" type="Script" id=1]
+[ext_resource path="res://items/ExplosiveBarrel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/sprites/ammoCrate.png" type="Texture" id=3]
+
+[node name="AmmoCrate" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+item_type = 0
+explosive_damage = 50
+
+[node name="Sprite3D" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.689741, 0 )
+visible = true
+shaded = true
+texture = ExtResource( 3 )
+
+[node name="CollisionShape" parent="." index="1"]
+disabled = true

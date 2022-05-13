@@ -1,0 +1,160 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/particles/smoke_04.png" type="Texture" id=1]
+[ext_resource path="res://weapons/explosion_gradient.tres" type="Gradient" id=2]
+[ext_resource path="res://assets/particles/flame_04.png" type="Texture" id=3]
+
+[sub_resource type="GradientTexture" id=1]
+gradient = ExtResource( 2 )
+width = 512
+
+[sub_resource type="Curve" id=2]
+max_value = 5.0
+_data = [ Vector2( 0.0506329, 2.91818 ), 0.0, -2.64593, 0, 0, Vector2( 0.310127, 5 ), 5.53599, 5.53599, 0, 0, Vector2( 1, 0 ), 1.51196, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+width = 512
+curve = SubResource( 2 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = ExtResource( 2 )
+width = 512
+
+[sub_resource type="ParticlesMaterial" id=5]
+trail_divisor = 6
+trail_color_modifier = SubResource( 4 )
+direction = Vector3( 0, 1, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 30.0
+initial_velocity_random = 0.3
+radial_accel = 1.0
+radial_accel_random = 1.0
+damping = 150.0
+angle = 360.0
+angle_random = 1.0
+scale = 1.2
+scale_random = 0.16
+scale_curve = SubResource( 3 )
+color_ramp = SubResource( 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="QuadMesh" id=7]
+material = SubResource( 6 )
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.133333, 0.911111 )
+colors = PoolColorArray( 0.707031, 0.707031, 0.707031, 1, 0.375, 0.375, 0.375, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+width = 512
+
+[sub_resource type="Curve" id=10]
+max_value = 3.0
+_data = [ Vector2( 0, 2.23636 ), 0.0, 0.0, 0, 0, Vector2( 0.234177, 2.68182 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.96364 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+width = 512
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+lifetime_randomness = 0.6
+direction = Vector3( 1, 1, 1 )
+spread = 60.0
+flatness = 1.0
+gravity = Vector3( 0, 3, 0 )
+initial_velocity = 1.5
+initial_velocity_random = 1.0
+angular_velocity = 1.0
+linear_accel_random = 1.0
+radial_accel = 1.0
+radial_accel_random = 1.0
+damping = 1.5
+damping_random = 1.0
+angle = 180.0
+angle_random = 0.6
+scale = 2.5
+scale_random = 1.0
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
+hue_variation = 1.0
+
+[sub_resource type="SpatialMaterial" id=13]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_diffuse_mode = 1
+params_billboard_mode = 3
+params_billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=14]
+material = SubResource( 13 )
+
+[sub_resource type="Animation" id=15]
+resource_name = "explosion"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Explosion:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Smoke:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Explosion" type="Particles" parent="."]
+emitting = false
+amount = 80
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.3
+local_coords = false
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
+
+[node name="Smoke" type="Particles" parent="."]
+emitting = false
+amount = 40
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.1
+randomness = 0.3
+draw_order = 1
+process_material = SubResource( 12 )
+draw_pass_1 = SubResource( 14 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/explosion = SubResource( 15 )
