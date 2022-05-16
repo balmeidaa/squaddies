@@ -6,6 +6,7 @@ func _ready():
     add_state("attack")
     add_state("follow")
     add_state("reload")
+    add_state("defend")
     call_deferred("set_state", states.idle)
     
 func _state_logic(delta):

@@ -16,8 +16,9 @@ export var bullet_speed = 30
 export var bullet_damage = 15
 export var fly_time = 4
 export var millis_between_shots = 100
-export var shells_drops = 5
+
 var current_ammo = max_ammo
+export var shells_drop = 5
 
 var reloading = false
 var trigger_released = true
@@ -36,7 +37,7 @@ var remaining_burst_shots = burts_shots
 func _ready():
     rof_timer.wait_time = millis_between_shots / 1000.0
     rof_timer.start()
-    shells.set_shells_drop(shells_drops)
+    shells.set_shells_drop(shells_drop)
 
     
 func fire():

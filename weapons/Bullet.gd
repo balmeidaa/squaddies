@@ -25,4 +25,6 @@ func _physics_process(delta):
 func _on_Area_body_entered(body):
     if body.has_method("_recieve_damage"):
         body._recieve_damage(BULLET_DAMAGE)
+    elif body.has_method("_on_destroy"):
+        body._on_destroy()
     queue_free()

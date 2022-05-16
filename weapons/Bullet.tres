@@ -1,0 +1,4 @@
+[gd_resource type="CapsuleMesh" format=2]
+
+[resource]
+radial_segments = 50

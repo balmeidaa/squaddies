@@ -7,6 +7,7 @@ func _on_Area_body_entered(body):
 
 
 func _on_pick_up(body):
-    if body.has_method("_heal"):
-        body._heal(heal_amount)
-        queue_free()
+    if body.has_method("_recieve_damage"):
+        if not body.is_full_health():
+            body._recieve_damage(-heal_amount)
+            queue_free()

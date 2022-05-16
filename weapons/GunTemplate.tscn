@@ -4,11 +4,12 @@
 [ext_resource path="res://weapons/Bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://weapons/GunScript.gd" type="Script" id=3]
 [ext_resource path="res://weapons/gun.png" type="Texture" id=4]
-[ext_resource path="res://weapons/Shells.tscn" type="PackedScene" id=5]
+[ext_resource path="res://weapons/ShellParticles.tscn" type="PackedScene" id=5]
 
 [node name="DefaultGun" type="Spatial"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.48444 )
 script = ExtResource( 3 )
+gun_name = "Default"
 Bullet = ExtResource( 2 )
 
 [node name="RofTimer" type="Timer" parent="."]
@@ -18,7 +19,7 @@ wait_time = 0.6
 one_shot = true
 
 [node name="Muzzle" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -5.95818e-08, -0.55437, -0.0931457 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1.68906e-08, -0.55437, -0.224164 )
 
 [node name="FirePoint" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87029e-09, -0.554328, -0.021084 )
@@ -28,6 +29,7 @@ transform = Transform( -1.14044e-07, 0, -0.7, 0, 0.7, 0, 0.7, 0, -1.14044e-07, 2
 texture = ExtResource( 4 )
 
 [node name="Shells" parent="." instance=ExtResource( 5 )]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 3.24247e-07, -0.163271, -0.995109 )
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 3.35158e-07, -0.284438, -1.02859 )
+emitting = false
 [connection signal="timeout" from="RofTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]

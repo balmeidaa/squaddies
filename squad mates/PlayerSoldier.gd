@@ -79,7 +79,7 @@ func init_player(player_index:int, camera: Camera, device_id: int = -1):
     self.device_id = device_id
     
 func _ready(): 
-
+    debug_label.text = str(current_health)
     position2D = camera.convert_3dpos_to_2dpos(transform.origin)
 
     marker.set_as_toplevel(true)
@@ -240,14 +240,14 @@ func _update_animation():
     var keys_array = logic_control.states.keys()
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
-    debug_label.text = animation
+#    debug_label.text = animation
 #    if debug_label != null:
 #        debug_label.text = animation
     anim_player.set_animation(animation)
 
 
 func _on_DistanceTimer_timeout():
-    if transform.origin != Vector3.ZERO:
+    if transform.origin != null:
         InputHandler.set_player_input(player_index, 'player_position', transform.origin)
 
 func execute_order_squad(player, order):
@@ -297,12 +297,17 @@ func _on_MarkedEnemy_body_entered(body):
 func add_squad(squad):
     squads.append(squad)
 
+
+func is_full_health():
+    return (current_health == max_health)
+        
+
 func _pick_up_ammo(amount_ammo):
     pass  
     
 func _recieve_damage(damage):
-    current_health -= damage
+    current_health -= int(round(damage))
     debug_label.text = str(current_health)
     if current_health <= 0:
-        #play dead animation
-        call_deferred("queue_free")
+        pass
+        #anim dead

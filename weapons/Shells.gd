@@ -7,12 +7,12 @@ func _ready():
     
     
 func set_shells_drop(shells:int):
-    particles.amount = shells
+    self.amount = shells
 
 func stop():
-    particles.emitting = false
+    self.emitting = false
 
 
 func start():
-    particles.emitting = true
+    self.emitting = true
 

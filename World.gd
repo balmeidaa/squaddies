@@ -20,7 +20,7 @@ func _ready():
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
     
     var player = add_new_player(1,-1)
-    add_teammates(player, 1)
+    #add_teammates(player, 1)
  
 #    $Debugger.add_property($Player/Camera, "dis", "")
 #    $Debugger.add_property($Player/Cursor, "position", "")
