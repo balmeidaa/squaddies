@@ -1,10 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://items/ItemAmmo.gd" type="Script" id=1]
 [ext_resource path="res://items/ExplosiveBarrel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/sprites/ammoCrate.png" type="Texture" id=3]
-
-[sub_resource type="CylinderMesh" id=1]
 
 [node name="AmmoCrate" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -15,7 +13,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.689741, 0 )
 shaded = true
 texture = ExtResource( 3 )
 
-[node name="CSGMesh" type="CSGMesh" parent="ExplosionArea" index="1"]
-transform = Transform( 5.5, 0, 0, 0, 1, 0, 0, 0, 5.5, 0, 0.377855, 0 )
-visible = false
-mesh = SubResource( 1 )
+[node name="ExplosionArea" parent="." index="2"]
+monitorable = true
+
+[node name="ExplosionTimer" parent="." index="3"]
+wait_time = 1.0

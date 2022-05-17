@@ -9,18 +9,21 @@ radius = 5.99804
 height = 1.18501
 
 [node name="ExplosiveBarrel" instance=ExtResource( 1 )]
+collision_mask = 11
 script = ExtResource( 2 )
 item_type = 3
 
 [node name="Sprite3D" parent="." index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.931169, 0 )
-billboard = 1
 texture = ExtResource( 3 )
 
 [node name="CollisionShape" parent="." index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.907467, 0 )
 
 [node name="ExplosionArea" type="Area" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0195472, 0 )
+priority = 100.0
+monitorable = false
 collision_layer = 0
 collision_mask = 27
 

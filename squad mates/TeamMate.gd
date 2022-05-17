@@ -24,6 +24,7 @@ onready var debug_label = $Debug.get_node("Viewport/Label")
 onready var weapon_controller = $WeaponController
 
 func _ready():
+    debug_label.text = str(hit_points)
     pass
 
 func _move_to(delta):
@@ -111,8 +112,8 @@ func _update_animation():
     var keys_array = logic_control.states.keys()
     var key_index = logic_control.state
     var animation = keys_array[key_index] 
-    if debug_label != null:
-        debug_label.text = str(animation)
+#    if debug_label != null:
+#        debug_label.text = str(animation)
     anim_player.set_animation(animation)
 
 
@@ -143,7 +144,7 @@ func _on_EnemyDetector_body_exited(body):
 
 func _recieve_damage(damage):
     hit_points -= damage
-    debug_label.text = str(hit_points)
+    debug_label.text = str(int(round(hit_points)))
     if hit_points <= 0:
         call_deferred("queue_free")
         
