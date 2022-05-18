@@ -34,5 +34,4 @@ shape = SubResource( 1 )
 [node name="ExplosionTimer" type="Timer" parent="." index="3"]
 wait_time = 0.6
 one_shot = true
-[connection signal="body_entered" from="ExplosionArea" to="." method="_on_ExplosionArea_body_entered"]
 [connection signal="timeout" from="ExplosionTimer" to="." method="_on_ExplosionTimer_timeout"]

@@ -167,6 +167,8 @@ func _process(delta):
         
     if Input.is_action_pressed(fire_action) and not alternate_input:
         weapon_controller.hold_trigger()
+    elif Input.is_action_pressed(fire_action) and  alternate_input:
+        alternate_input = false
         
     if check_release_trigger(Input):
         weapon_controller.release_trigger()
@@ -184,9 +186,8 @@ func _process(delta):
  
 
 func check_release_trigger(Input):
-    if Input.is_action_just_released(fire_action) or (Input.is_action_just_released(button_y) and device_id > -1):
-        return true
-    return false
+    return Input.is_action_just_released(fire_action) or (Input.is_action_just_released(button_y) and device_id > -1)
+        
 
 func flip_sprite():
     if position2D.x < half_viewport.x:
@@ -211,8 +212,7 @@ func _unhandled_input(event):
   
     ### Squad Order
     if Input.is_action_pressed(squad_menu):
-        if device_id > -1:
-            alternate_input = !alternate_input 
+        alternate_input = !alternate_input 
 
         InputHandler.toggle_radial_menu(player_index, position2D)
         InputHandler.set_player_input(player_index, 'squad_next_position', marker_position)
