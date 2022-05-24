@@ -83,5 +83,6 @@ autostart = true
 [node name="Marker" parent="." index="8" instance=ExtResource( 11 )]
 
 [node name="WeaponController" parent="." index="9" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.201, 0 )
 default_gun = ExtResource( 9 )
 [connection signal="timeout" from="DistanceTimer" to="." method="_on_DistanceTimer_timeout"]

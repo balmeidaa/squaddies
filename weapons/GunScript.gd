@@ -16,6 +16,7 @@ export var bullet_speed = 30
 export var bullet_damage = 15
 export var fly_time = 4
 export var millis_between_shots = 100
+export var max_ammo_cap = 180  
 
 var current_ammo = max_ammo
 export var shells_drop = 5
@@ -29,6 +30,14 @@ enum FireMode {
    }
 
 export (FireMode) var fire_mode = FireMode.AUTO
+
+enum BulletType {
+    LIGHT,
+    HEAVY,
+    SHELL
+   }
+
+export (BulletType) var bullet_type = BulletType.LIGHT
 
 export (int) var burts_shots = 3
 var remaining_burst_shots = burts_shots
@@ -99,3 +108,12 @@ func _on_ReloadTimer_timeout():
 func _on_Timer_timeout():
     muzzle.muzzle_off()
     can_shoot = true
+    
+func get_weapon_name():
+    return gun_name
+    
+func get_current_ammo():
+    return current_ammo
+
+func get_max_ammo_cap():
+    return max_ammo_cap
