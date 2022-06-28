@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://weapons/FireParticles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://weapons/Bullet.tscn" type="PackedScene" id=2]
@@ -6,10 +6,12 @@
 [ext_resource path="res://weapons/gun.png" type="Texture" id=4]
 [ext_resource path="res://weapons/ShellParticles.tscn" type="PackedScene" id=5]
 
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.3475, 0.68213, 0.847539 )
+
 [node name="DefaultGun" type="Spatial"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.48444 )
 script = ExtResource( 3 )
-gun_name = "Default"
 Bullet = ExtResource( 2 )
 
 [node name="RofTimer" type="Timer" parent="."]
@@ -26,10 +28,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87029e-09, -0.554328, -0.021
 
 [node name="GunSprite" type="Sprite3D" parent="."]
 transform = Transform( -1.14044e-07, 0, -0.7, 0, 0.7, 0, 0.7, 0, -1.14044e-07, 2.91021e-07, -0.698109, -0.893142 )
+double_sided = false
+alpha_cut = 1
 texture = ExtResource( 4 )
 
 [node name="Shells" parent="." instance=ExtResource( 5 )]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 3.35158e-07, -0.284438, -1.02859 )
-emitting = false
+
+[node name="Area" type="Area" parent="."]
+collision_layer = 32
+collision_mask = 8
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16847e-07, -0.696134, -0.665501 )
+shape = SubResource( 1 )
 [connection signal="timeout" from="RofTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

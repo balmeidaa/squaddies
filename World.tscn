@@ -1,11 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EnemySoldier.tscn" type="PackedScene" id=2]
+[ext_resource path="res://weapons/Pistol.tscn" type="PackedScene" id=3]
 [ext_resource path="res://misc/Debugger.tscn" type="PackedScene" id=4]
 [ext_resource path="res://items/ExplosiveBarrel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://items/AmmoCrate.tscn" type="PackedScene" id=6]
 [ext_resource path="res://items/SmallHealth.tscn" type="PackedScene" id=7]
+[ext_resource path="res://weapons/AutoRifle.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Environment" id=1]
 ambient_light_color = Color( 0.521569, 0.521569, 0.521569, 1 )
@@ -16,6 +18,9 @@ albedo_color = Color( 0.188235, 0.858824, 0.152941, 1 )
 
 [sub_resource type="PlaneMesh" id=3]
 material = SubResource( 2 )
+
+[sub_resource type="ConvexPolygonShape" id=4]
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
 [node name="World" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.918046 )
@@ -34,6 +39,10 @@ shadow_bias = -0.2
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
+shape = SubResource( 4 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
@@ -105,4 +114,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8111, 0, -1.5988 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0882893, 4.76837e-07, -4.88755 )
 
 [node name="SmallHealth" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.03737, 6.78699 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21177, 6.78699 )
+
+[node name="Weapon" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.0108903, 0, 0.999941, 0, 1, 0, -0.999941, 0, 0.0108903, 6.81455, 1.47809, 5.22021 )
+
+[node name="AutoRifle" parent="." instance=ExtResource( 8 )]
+transform = Transform( -2.8213e-07, 0, 1, 0, 1, 0, -1, 0, -2.8213e-07, 0, 1.97988, 3.51556 )

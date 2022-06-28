@@ -8,8 +8,7 @@ onready var fire_point = $FirePoint
 onready var muzzle = $Muzzle
 onready var shells = $Shells
 var can_shoot = true
-
-export var gun_name = "Pistol"
+export var weapon_name = "default"
 export(PackedScene) var Bullet
 export var max_ammo = 30
 export var bullet_speed = 30
@@ -17,7 +16,7 @@ export var bullet_damage = 15
 export var fly_time = 4
 export var millis_between_shots = 100
 export var max_ammo_cap = 180  
-
+var equiped = false
 var current_ammo = max_ammo
 export var shells_drop = 5
 
@@ -41,14 +40,23 @@ export (BulletType) var bullet_type = BulletType.LIGHT
 
 export (int) var burts_shots = 3
 var remaining_burst_shots = burts_shots
-
+var gravity_active = false
 
 func _ready():
     rof_timer.wait_time = millis_between_shots / 1000.0
     rof_timer.start()
     shells.set_shells_drop(shells_drop)
 
+func _process(delta):
+    if gravity_active and global_transform.origin.y > 0.2:
+        global_transform.origin.y -= delta
+    else:
+        gravity_active = false
     
+func drop():
+    equiped = false
+    gravity_active = true 
+   
 func fire():
     
     if current_ammo <= 0 and not reloading:
@@ -110,10 +118,15 @@ func _on_Timer_timeout():
     can_shoot = true
     
 func get_weapon_name():
-    return gun_name
+    return weapon_name
     
 func get_current_ammo():
     return current_ammo
 
 func get_max_ammo_cap():
     return max_ammo_cap
+
+func _on_Area_body_entered(body):
+    if body.has_method("pick_up_weapon") and not equiped:
+        body.pick_up_weapon(weapon_name)
+        queue_free()

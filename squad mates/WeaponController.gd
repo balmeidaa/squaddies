@@ -1,7 +1,6 @@
 extends Position3D
 
-export (PackedScene) var default_gun
-var equipped_weapon: Gun
+var equipped_weapon: Gun = null
 var weapon_inventory: Array = []
 enum BulletType {
     LIGHT,
@@ -13,17 +12,23 @@ var heavy_ammo = 0
 var shells = 0
 var grenades = 0
 
+var default = preload("res://weapons/GunTemplate.tscn")
+var pistol = preload("res://weapons/Pistol.tscn")
+var auto_rifle = preload("res://weapons/AutoRifle.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    if default_gun:
-        equip_weapon(default_gun)
+    if weapon_inventory.size() == 0:
+        equip_weapon("default")
         
     
-func equip_weapon(weapon_to_equip):
-    if equipped_weapon:
+func equip_weapon(weapon_to_equip:String):
+    
+    if equipped_weapon and weapon_to_equip != equipped_weapon.get_weapon_name():
         equipped_weapon.queue_free()
     
-    equipped_weapon = weapon_to_equip.instance()
+    equipped_weapon = weapon_factory(weapon_to_equip).instance()
+    equipped_weapon.equiped = true
     var max_cap_ammo = equipped_weapon.get_max_ammo_cap()
     var ammo_in_gun = equipped_weapon.get_current_ammo()
     var weapon_name = equipped_weapon.get_weapon_name()
@@ -36,15 +41,18 @@ func equip_weapon(weapon_to_equip):
         "total_current_ammo": (current_ammo + ammo_in_gun),
         "max_cap_ammo":max_cap_ammo
        }
-    if weapon_inventory.size() == 0:
+    if inventory_empty():
          weapon_inventory.append(weapon_info)
     elif weapon_inventory.size() == 1:
          weapon_inventory.push_front(weapon_info)
     else:
-        weapon_inventory.pop_front()
+        var weapon = weapon_inventory.pop_front()
+        print(weapon["weapon_object"])
+        weapon["weapon_object"].drop()
         weapon_inventory.append(weapon_info)
         
     add_child(equipped_weapon)
+
 
 func hold_trigger():
     if equipped_weapon:
@@ -66,4 +74,23 @@ func get_ammo_type(bullet_type):
         BulletType.HEAVY:
             return heavy_ammo
         BulletType.SHELL:
-            return shells        
+            return shells    
+            
+func switch_weapon():
+    if not inventory_empty() and weapon_inventory.size() == 2:
+        var current_weapon = weapon_inventory.pop_front()
+        weapon_inventory.append(current_weapon)
+        print("swi")
+        equip_weapon(weapon_inventory[0]["weapon_name"])
+        
+
+func inventory_empty():
+    return  weapon_inventory.size() == 0                  
+func weapon_factory(type):
+    match type:
+        "pistol":
+            return pistol
+        "auto_rifle":
+            return auto_rifle
+        "default":
+            return default

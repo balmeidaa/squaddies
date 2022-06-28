@@ -12,6 +12,7 @@ var fire_action
 #pending
 var reload_action
 var roll_action
+var switch_weapon
 
 var alternate_input = false
 var button_x #change weap/ order Attack
@@ -89,6 +90,7 @@ func _ready():
     move_up_action = "up_p{n}".format({"n":player_index})
     fire_action = "fire_p{n}".format({"n":player_index})
     reload_action = "reload_p{n}".format({"n":player_index})
+    switch_weapon = "switch_weap_p{n}".format({"n":player_index})
     
     aim_up = "aim_up_p{n}".format({"n":player_index})
     aim_down = "aim_down_p{n}".format({"n":player_index})
@@ -156,8 +158,10 @@ func _process(delta):
             
     if Input.is_action_pressed(reload_action):
          weapon_controller.reload_weapon()
-
-        
+    
+    if Input.is_action_pressed(switch_weapon):
+         weapon_controller.switch_weapon()
+    
     if velocity.length() > 0:
         is_moving = true
         velocity = velocity.normalized() * speed
@@ -301,6 +305,8 @@ func add_squad(squad):
 func is_full_health():
     return (current_health == max_health)
         
+func pick_up_weapon(weapon):
+    weapon_controller.equip_weapon(weapon)  
 
 func _pick_up_ammo(amount_ammo):
     pass  

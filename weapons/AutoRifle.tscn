@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=1]
+[ext_resource path="res://weapons/auto_rifle.png" type="Texture" id=2]
+[ext_resource path="res://weapons/Guns/AssaultRiffle_A.fbx" type="PackedScene" id=3]
+
+[node name="AutoRifle" instance=ExtResource( 1 )]
+weapon_name = "auto_rifle"
+max_ammo = 20
+max_ammo_cap = 200
+bullet_type = 1
+
+[node name="Muzzle" parent="." index="2"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -3.18231e-07, -0.55437, 0.700643 )
+
+[node name="FirePoint" parent="." index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78094e-07, -0.554328, 0.853465 )
+
+[node name="GunSprite" parent="." index="4"]
+transform = Transform( -2.44381e-07, 0, -1.5, 0, 1.5, 0, 1.5, 0, -2.44381e-07, 1.24716e-07, -0.698109, -0.382755 )
+visible = false
+texture = ExtResource( 2 )
+
+[node name="Shells" parent="." index="5"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.127503, -0.284438, -0.431788 )
+
+[node name="Area" parent="." index="6"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1.5, -0.0265817, -0.284081, 0.517243 )
+
+[node name="AssaultRiffle_A" parent="." index="7" instance=ExtResource( 3 )]
+transform = Transform( 2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 1.39182e-07, -0.641427, -0.427147 )

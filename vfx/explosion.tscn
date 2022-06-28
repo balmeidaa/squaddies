@@ -159,3 +159,4 @@ draw_pass_1 = SubResource( 14 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "explosion"
 anims/explosion = SubResource( 15 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
