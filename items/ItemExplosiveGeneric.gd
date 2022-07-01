@@ -11,10 +11,9 @@ onready var delay_explosion = $DelayExplosion
 const explosion_vfx = preload("res://vfx/explosion.tscn") 
 var is_destroyed = false
 
- 
 
-func _on_destroy():
-    
+
+func _on_DelayExplosion_timeout():
     is_destroyed = true
     sprite3d.hide()
     collision_shape.disabled = true
@@ -30,6 +29,11 @@ func _on_destroy():
         elif body.has_method("_on_destroy") and body.has_method("is_destroyed"):
             if not body.is_destroyed():
                 body._on_destroy()
+
+func _on_destroy():
+    delay_explosion.start()
+    
+   
 
 func is_destroyed():
     return is_destroyed    

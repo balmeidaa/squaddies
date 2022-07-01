@@ -35,8 +35,13 @@ shape = SubResource( 1 )
 wait_time = 0.8
 one_shot = true
 
-[node name="VfxTimer" type="Timer" parent="." index="4"]
+[node name="DelayExplosion" type="Timer" parent="." index="4"]
+wait_time = 0.2
+one_shot = true
+
+[node name="VfxTimer" type="Timer" parent="." index="5"]
 wait_time = 3.0
 one_shot = true
 [connection signal="timeout" from="ExplosionTimer" to="." method="_on_ExplosionTimer_timeout"]
+[connection signal="timeout" from="DelayExplosion" to="." method="_on_DelayExplosion_timeout"]
 [connection signal="timeout" from="VfxTimer" to="." method="_on_VfxTimer_timeout"]

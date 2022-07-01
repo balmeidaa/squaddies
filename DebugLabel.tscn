@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Viewport.gd" type="Script" id=1]
-[ext_resource path="res://UI HUD/UIRadialMenuFont.tres" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/FORCED SQUARE.ttf" type="DynamicFontData" id=2]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")

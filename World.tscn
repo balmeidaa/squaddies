@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EnemySoldier.tscn" type="PackedScene" id=2]
@@ -12,15 +12,16 @@
 [sub_resource type="Environment" id=1]
 ambient_light_color = Color( 0.521569, 0.521569, 0.521569, 1 )
 ambient_light_energy = 0.82
+fog_depth_curve = 2.0
+fog_transmit_enabled = true
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.188235, 0.858824, 0.152941, 1 )
 
 [sub_resource type="PlaneMesh" id=3]
 material = SubResource( 2 )
-
-[sub_resource type="ConvexPolygonShape" id=4]
-points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
 
 [node name="World" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.918046 )
@@ -39,10 +40,6 @@ shadow_bias = -0.2
 transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 mesh = SubResource( 3 )
 material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
-shape = SubResource( 4 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0

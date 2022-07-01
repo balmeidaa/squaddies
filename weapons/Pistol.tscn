@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=1]
-[ext_resource path="res://weapons/pistol.png" type="Texture" id=2]
 [ext_resource path="res://weapons/Guns/Gun_A.fbx" type="PackedScene" id=3]
 
 [node name="Weapon" instance=ExtResource( 1 )]
@@ -18,11 +17,6 @@ visible = false
 
 [node name="FirePoint" parent="." index="3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.99716e-07, -0.470001, -0.612923 )
-
-[node name="GunSprite" parent="." index="4"]
-transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 3.26348e-07, -0.696756, -1.00156 )
-visible = false
-texture = ExtResource( 2 )
 
 [node name="Area" parent="." index="6"]
 transform = Transform( 0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 2.1724e-07, -0.129743, -0.666705 )
