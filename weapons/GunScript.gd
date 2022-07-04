@@ -1,7 +1,6 @@
 extends Spatial
 class_name Gun
 
-
 onready var rof_timer = $RofTimer as Timer
 onready var reload_timer = $ReloadTimer
 onready var fire_point = $FirePoint
@@ -19,7 +18,16 @@ export var max_ammo_cap = 180
 var equiped = false
 var current_ammo = max_ammo
 export var shells_drop = 5
+### Audio files
+export(String, FILE, "*.wav") var audio_shot_0
+export(String, FILE, "*.wav") var audio_shot_1
+export(String, FILE, "*.wav") var audio_shot_2
 
+export(String, FILE, "*.wav") var audio_reload
+
+onready var audio_player = $Audio
+
+var sound_files = []
 var reloading = false
 var trigger_released = true
 enum FireMode {
@@ -37,15 +45,17 @@ enum BulletType {
    }
 
 export (BulletType) var bullet_type = BulletType.LIGHT
-
+ 
 export (int) var burts_shots = 3
 var remaining_burst_shots = burts_shots
 var gravity_active = false
 
 func _ready():
+    randomize()
     rof_timer.wait_time = millis_between_shots / 1000.0
     rof_timer.start()
     shells.set_shells_drop(shells_drop)
+    sound_files = [audio_shot_0, audio_shot_1, audio_shot_2]
 
 func _process(delta):
     if gravity_active and global_transform.origin.y > 0.2:
@@ -59,6 +69,9 @@ func drop():
    
 func fire():
     
+    var sound_index = randi() % sound_files.size()
+    audio_player.stream = load(sound_files[sound_index])
+    audio_player.play()
     if current_ammo <= 0 and not reloading:
         reload_weapon()
         shells.stop()

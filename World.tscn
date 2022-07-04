@@ -115,6 +115,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21177, 6.78699 )
 
 [node name="Weapon" parent="." instance=ExtResource( 3 )]
 transform = Transform( 0.0108903, 0, 0.999941, 0, 1, 0, -0.999941, 0, 0.0108903, 6.81455, 1.47809, 5.22021 )
+audio_shot_0 = ""
+audio_shot_1 = ""
+audio_shot_2 = ""
+audio_reload = ""
 
 [node name="AutoRifle" parent="." instance=ExtResource( 8 )]
 transform = Transform( -2.8213e-07, 0, 1, 0, 1, 0, -1, 0, -2.8213e-07, 0, 1.97988, 3.51556 )
+audio_shot_0 = ""
+audio_shot_1 = ""
+audio_shot_2 = ""
+audio_reload = ""

@@ -1,5 +1,6 @@
 extends Position3D
 
+
 var equipped_weapon: Gun = null
 var weapon_inventory: Array = []
 enum BulletType {
@@ -11,10 +12,14 @@ var light_ammo = 0
 var heavy_ammo = 0
 var shells = 0
 var grenades = 0
-
+const AIM_TIME = 0.3
+const HIP_DISTANCE = 0.646
 var default = preload("res://weapons/GunTemplate.tscn")
 var pistol = preload("res://weapons/Pistol.tscn")
 var auto_rifle = preload("res://weapons/AutoRifle.tscn")
+onready var animation = get_node("../Tween")
+
+var aiming_down = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -80,12 +85,13 @@ func switch_weapon():
     if not inventory_empty() and weapon_inventory.size() == 2:
         var current_weapon = weapon_inventory.pop_front()
         weapon_inventory.append(current_weapon)
-        print("swi")
         equip_weapon(weapon_inventory[0]["weapon_name"])
         
 
 func inventory_empty():
-    return  weapon_inventory.size() == 0                  
+    return  weapon_inventory.size() == 0       
+    
+               
 func weapon_factory(type):
     match type:
         "pistol":
@@ -94,3 +100,21 @@ func weapon_factory(type):
             return auto_rifle
         "default":
             return default
+
+func aim_down():
+    if aiming_down:
+        return
+   
+    animation.interpolate_property(self, "translation:x", self.transform.origin.x, 0, AIM_TIME, Tween.TRANS_QUART, Tween.EASE_IN_OUT)
+    animation.start()
+    
+    aiming_down = true
+    
+func aim_from_hip():
+    
+    if not aiming_down:
+        return
+        
+    animation.interpolate_property(self, "translation:x", self.transform.origin.x, HIP_DISTANCE, AIM_TIME, Tween.TRANS_QUART, Tween.EASE_IN_OUT)
+    animation.start()
+    aiming_down = false

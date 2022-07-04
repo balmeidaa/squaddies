@@ -7,10 +7,10 @@
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 weapon_name = "Uzi"
 max_ammo = 20
+audio_shot_0 = "res://assets/sfx/burst_shot.wav"
+audio_shot_1 = "res://assets/sfx/burst_shot2.wav"
+audio_shot_2 = "res://assets/sfx/burst_shot3.wav"
 fire_mode = 1
-
-[node name="GunSprite" parent="." index="4"]
-visible = false
 
 [node name="Area" parent="." index="6"]
 transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1.1, 0, 0, 0 )

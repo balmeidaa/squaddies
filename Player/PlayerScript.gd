@@ -14,7 +14,7 @@ var reload_action
 var roll_action
 var switch_weapon
 
-
+var aim_sight
 var aim_up
 var aim_down
 var aim_left
@@ -68,8 +68,8 @@ var movement = Vector3()
 onready var head = $Head
 onready var camera = $Head/Camera
 
-func init_player(player_index:int, device_id: int = -1):
-    self.player_index = player_index
+func init_player(playerIndex:int, device_id: int = -1):
+    self.player_index = playerIndex
     self.device_id = device_id
     
 func _ready(): 
@@ -88,6 +88,8 @@ func _ready():
     aim_down = "aim_down_p{n}".format({"n":player_index})
     aim_left = "aim_left_p{n}".format({"n":player_index})
     aim_right = "aim_right_p{n}".format({"n":player_index})  
+    
+    aim_sight = "aim_sight_p{n}".format({"n":player_index})
     
     viewport_size = get_viewport().size
     half_viewport = viewport_size/2
@@ -138,9 +140,14 @@ func _process(delta):
         position2D.x += lerp(0, (motion.x) * viewport_size.x/2, joypad_motion_factor)
         position2D.y += lerp(0, (motion.y) * viewport_size.y, joypad_motion_factor)
 
+    if Input.is_action_pressed(aim_sight):
+        weapon_controller.aim_down()
+        
+    if Input.is_action_just_released(aim_sight):
+        weapon_controller.aim_from_hip()
             
-    if Input.is_action_pressed(reload_action):
-         weapon_controller.reload_weapon()
+#    if Input.is_action_pressed(reload_action):
+#         weapon_controller.reload_weapon()
     
     if Input.is_action_pressed(switch_weapon):
          weapon_controller.switch_weapon()

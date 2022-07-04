@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/burst_shot2.wav-63dd223284a43e169cd8aee55954f840.sample"
+
+[deps]
+
+source_file="res://assets/sfx/burst_shot2.wav"
+dest_files=[ "res://.import/burst_shot2.wav-63dd223284a43e169cd8aee55954f840.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

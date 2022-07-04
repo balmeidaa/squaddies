@@ -1,6 +1,4 @@
 extends Spatial
-onready var particles = $Particles as Particles
-
 
 func _ready():
     stop()
