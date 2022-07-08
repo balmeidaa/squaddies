@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Uzi_C.fbx-2ad146c01256c828b818e02aad49640d.scn"
+path="res://.import/Uzi_C.fbx-b1459cbcf7d733c958cfd832364218a1.scn"
 
 [deps]
 
-source_file="res://weapons/Guns/Uzi_C.fbx"
-dest_files=[ "res://.import/Uzi_C.fbx-2ad146c01256c828b818e02aad49640d.scn" ]
+source_file="res://weapons/Models/Uzi_C.fbx"
+dest_files=[ "res://.import/Uzi_C.fbx-b1459cbcf7d733c958cfd832364218a1.scn" ]
 
 [params]
 
@@ -16,9 +16,11 @@ nodes/root_name="Scene Root"
 nodes/root_scale=1.0
 nodes/custom_script=""
 nodes/storage=0
+nodes/use_legacy_names=true
 materials/location=1
 materials/storage=1
 materials/keep_on_reimport=true
+meshes/octahedral_compression=true
 meshes/compress=true
 meshes/ensure_tangents=true
 meshes/storage=0

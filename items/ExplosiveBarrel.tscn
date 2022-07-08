@@ -11,7 +11,6 @@ height = 1.18501
 [node name="ExplosiveBarrel" instance=ExtResource( 1 )]
 collision_mask = 11
 script = ExtResource( 2 )
-item_type = 3
 
 [node name="Sprite3D" parent="." index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.931169, 0 )
@@ -22,10 +21,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.907467, 0 )
 
 [node name="ExplosionArea" type="Area" parent="." index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0195472, 0 )
-priority = 100.0
-monitorable = false
 collision_layer = 0
 collision_mask = 27
+monitorable = false
+priority = 100.0
 
 [node name="CollisionShape" type="CollisionShape" parent="ExplosionArea" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.666341, 0 )
@@ -42,6 +41,7 @@ one_shot = true
 [node name="VfxTimer" type="Timer" parent="." index="5"]
 wait_time = 3.0
 one_shot = true
+
 [connection signal="timeout" from="ExplosionTimer" to="." method="_on_ExplosionTimer_timeout"]
 [connection signal="timeout" from="DelayExplosion" to="." method="_on_DelayExplosion_timeout"]
 [connection signal="timeout" from="VfxTimer" to="." method="_on_VfxTimer_timeout"]

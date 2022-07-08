@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/HeavyWeapon_F.fbx-716bd245883aaef43ac641065685b209.scn"
+path="res://.import/Gun_B.fbx-c3a685dcd289e59fdb37fd9d6a31043c.scn"
 
 [deps]
 
-source_file="res://weapons/Guns/HeavyWeapon_F.fbx"
-dest_files=[ "res://.import/HeavyWeapon_F.fbx-716bd245883aaef43ac641065685b209.scn" ]
+source_file="res://weapons/Models/Gun_B.fbx"
+dest_files=[ "res://.import/Gun_B.fbx-c3a685dcd289e59fdb37fd9d6a31043c.scn" ]
 
 [params]
 
@@ -16,9 +16,11 @@ nodes/root_name="Scene Root"
 nodes/root_scale=1.0
 nodes/custom_script=""
 nodes/storage=0
+nodes/use_legacy_names=true
 materials/location=1
 materials/storage=1
 materials/keep_on_reimport=true
+meshes/octahedral_compression=true
 meshes/compress=true
 meshes/ensure_tangents=true
 meshes/storage=0

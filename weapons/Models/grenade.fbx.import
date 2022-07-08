@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Gun_B.fbx-bffa12dbb4a015245e9ef356c23342dd.scn"
+path="res://.import/grenade.fbx-547bc55239cfe71c8b1614a444f4780b.scn"
 
 [deps]
 
-source_file="res://weapons/Guns/Gun_B.fbx"
-dest_files=[ "res://.import/Gun_B.fbx-bffa12dbb4a015245e9ef356c23342dd.scn" ]
+source_file="res://weapons/Models/grenade.fbx"
+dest_files=[ "res://.import/grenade.fbx-547bc55239cfe71c8b1614a444f4780b.scn" ]
 
 [params]
 
@@ -16,10 +16,12 @@ nodes/root_name="Scene Root"
 nodes/root_scale=1.0
 nodes/custom_script=""
 nodes/storage=0
+nodes/use_legacy_names=false
 materials/location=1
 materials/storage=1
 materials/keep_on_reimport=true
-meshes/compress=true
+meshes/octahedral_compression=true
+meshes/compress=4286
 meshes/ensure_tangents=true
 meshes/storage=0
 meshes/light_baking=0

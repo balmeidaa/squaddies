@@ -7,12 +7,14 @@ var move_right_action
 var move_left_action
 var move_down_action
 var move_up_action
-var fire_action
 
-#pending
+
+#Action
+var fire_action
 var reload_action
-var roll_action
-var switch_weapon
+var roll_action #Tackle
+var use_item
+var drop_weapon
 
 var aim_sight
 var aim_up
@@ -37,8 +39,7 @@ onready var logic_control = $LogicControl
 
 onready var debug_label = $Debug.get_node("Viewport/Label")
 onready var weapon_controller = $Head/WeaponController
-
-
+ 
 var squads = []
 var order_attack_active = false
 
@@ -82,7 +83,8 @@ func _ready():
     move_up_action = "up_p{n}".format({"n":player_index})
     fire_action = "fire_p{n}".format({"n":player_index})
     reload_action = "reload_p{n}".format({"n":player_index})
-    switch_weapon = "switch_weap_p{n}".format({"n":player_index})
+    use_item = "use_item_p{n}".format({"n":player_index})
+    drop_weapon = "drop_weapon_p{n}".format({"n":player_index})
     
     aim_up = "aim_up_p{n}".format({"n":player_index})
     aim_down = "aim_down_p{n}".format({"n":player_index})
@@ -100,7 +102,7 @@ func _input(event):
         rotate_y(deg2rad(-event.relative.x * mouse_sense))
         head.rotate_x(deg2rad(-event.relative.y * mouse_sense))
         head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89)) 
-
+        
         
 func _physics_process(delta):
     direction = Vector3.ZERO
@@ -146,11 +148,14 @@ func _process(delta):
     if Input.is_action_just_released(aim_sight):
         weapon_controller.aim_from_hip()
             
-#    if Input.is_action_pressed(reload_action):
-#         weapon_controller.reload_weapon()
+    if Input.is_action_pressed(reload_action):
+         weapon_controller.reload_weapon()
     
-    if Input.is_action_pressed(switch_weapon):
-         weapon_controller.switch_weapon()
+    if Input.is_action_just_pressed(drop_weapon):
+         weapon_controller.drop_weapon()
+    
+    if Input.is_action_pressed(use_item):
+         weapon_controller.throw_grenade(head.rotation.x)
     
     if velocity.length() > 0:
         is_moving = true
@@ -161,7 +166,7 @@ func _process(delta):
         
     if Input.is_action_pressed(fire_action):
         weapon_controller.hold_trigger()
-   
+        
         
     if check_release_trigger(Input):
         weapon_controller.release_trigger()

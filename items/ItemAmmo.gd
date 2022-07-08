@@ -2,6 +2,11 @@ extends "res://items/ItemExplosiveGeneric.gd"
 
 export var amount_ammo = 20
 
+enum BulletType {
+    LIGHT,
+    HEAVY,
+    SHELL
+   }
 
 func _on_pick_up(body):
     if body.has_method("_pick_up_ammo"):

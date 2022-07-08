@@ -1,12 +1,17 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://weapons/GunTemplate.tscn" type="PackedScene" id=1]
-[ext_resource path="res://weapons/Guns/AssaultRiffle_A.fbx" type="PackedScene" id=3]
+[ext_resource path="res://weapons/Models/AssaultRiffle_A.fbx" type="PackedScene" id=3]
 
 [node name="AutoRifle" instance=ExtResource( 1 )]
 weapon_name = "auto_rifle"
-max_ammo = 20
+bullet_speed = 70
+fly_time = 3
+millis_between_shots = 50
 max_ammo_cap = 200
+audio_shot_0 = "res://assets/sfx/burst_shot2.wav"
+audio_shot_1 = "res://assets/sfx/burst_shot.wav"
+audio_shot_2 = "res://assets/sfx/burst_shot.wav"
 bullet_type = 1
 
 [node name="Muzzle" parent="." index="2"]

@@ -23,7 +23,7 @@ viewport_path = NodePath("Debug/Viewport")
 
 [node name="Player" groups=["player"] instance=ExtResource( 1 )]
 collision_layer = 8
-collision_mask = 23
+collision_mask = 151
 script = ExtResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="." index="0"]
@@ -52,11 +52,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0854, 0 )
 texture = SubResource( 5 )
 
 [node name="Head" type="Spatial" parent="." index="5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65725, 1.59866 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.78868, 1.59866 )
 
 [node name="Camera" type="ClippedCamera" parent="Head" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0142, 2.79204 )
 process_mode = 1
+collision_mask = 0
 
 [node name="WeaponController" parent="Head" index="1" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.646091, -0.456253, -1.59866 )

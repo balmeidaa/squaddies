@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/Riffle_A.fbx-de8ba4f0e7dc1fbc2959eedea3f83eca.scn"
+path="res://.import/Gun_A.fbx-160cfb376e1e50c5501a02e75e4c0b05.scn"
 
 [deps]
 
-source_file="res://weapons/Guns/Riffle_A.fbx"
-dest_files=[ "res://.import/Riffle_A.fbx-de8ba4f0e7dc1fbc2959eedea3f83eca.scn" ]
+source_file="res://weapons/Models/Gun_A.fbx"
+dest_files=[ "res://.import/Gun_A.fbx-160cfb376e1e50c5501a02e75e4c0b05.scn" ]
 
 [params]
 
@@ -16,9 +16,11 @@ nodes/root_name="Scene Root"
 nodes/root_scale=1.0
 nodes/custom_script=""
 nodes/storage=0
+nodes/use_legacy_names=true
 materials/location=1
 materials/storage=1
 materials/keep_on_reimport=true
+meshes/octahedral_compression=true
 meshes/compress=true
 meshes/ensure_tangents=true
 meshes/storage=0

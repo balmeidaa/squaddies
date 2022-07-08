@@ -1,15 +1,5 @@
 extends StaticBody
 
-enum ItemType {
-    HEALTH,
-    AMMO,
-    GRENADE,
-    HAZARD
-   }
-
-export (ItemType) var item_type = ItemType.HEALTH
-
-
 func _ready():
     pass 
 
