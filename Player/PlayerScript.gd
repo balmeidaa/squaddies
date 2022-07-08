@@ -168,16 +168,12 @@ func _process(delta):
         weapon_controller.hold_trigger()
         
         
-    if check_release_trigger(Input):
+    if Input.is_action_just_released(fire_action):
         weapon_controller.release_trigger()
   
  
     move_and_slide(velocity)
  
-
-func check_release_trigger(Input):
-    return Input.is_action_just_released(fire_action)
-        
  
         
 func _unhandled_input(event):

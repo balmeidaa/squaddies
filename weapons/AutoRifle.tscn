@@ -12,19 +12,27 @@ max_ammo_cap = 200
 audio_shot_0 = "res://assets/sfx/burst_shot2.wav"
 audio_shot_1 = "res://assets/sfx/burst_shot.wav"
 audio_shot_2 = "res://assets/sfx/burst_shot.wav"
-bullet_type = 1
 
-[node name="Muzzle" parent="." index="2"]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -3.18231e-07, -0.55437, 0.700643 )
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32913e-07, -0.610108, -0.40791 )
 
-[node name="FirePoint" parent="." index="3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.78094e-07, -0.554328, 0.853465 )
+[node name="Muzzle" parent="." index="3"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -0.0135434, -0.55437, 0.700643 )
 
-[node name="Shells" parent="." index="5"]
+[node name="FirePoint" parent="." index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0135439, -0.554328, 0.853465 )
+
+[node name="Gun_B" parent="." index="5"]
+visible = false
+
+[node name="Shells" parent="." index="6"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0.127503, -0.284438, -0.431788 )
-
-[node name="Area" parent="." index="6"]
-transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1.5, -0.0265817, -0.284081, 0.517243 )
 
 [node name="AssaultRiffle_A" parent="." index="7" instance=ExtResource( 3 )]
 transform = Transform( 2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 1.39182e-07, -0.641427, -0.427147 )
+
+[node name="Area" parent="." index="8"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1.5, -0.0265817, -0.284081, 0.517243 )
+
+[node name="CollisionShape" parent="Area" index="0"]
+visible = false

@@ -6,27 +6,36 @@
 [node name="Weapon" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.56678 )
 weapon_name = "pistol"
-max_ammo = 10
+max_mag_cap = 15
 bullet_speed = 50
-max_ammo_cap = 200
+max_ammo_cap = 45
 shells_drop = 1
 audio_shot_0 = "res://assets/sfx/gun_shot_0.wav"
 audio_shot_1 = "res://assets/sfx/gun_shot_2.wav"
 audio_shot_2 = "res://assets/sfx/gun_shot3.wav"
 fire_mode = 0
 
-[node name="Muzzle" parent="." index="2"]
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0349742, -0.623967, -1.16357 )
+
+[node name="Muzzle" parent="." index="3"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 4.14399e-08, -0.445904, -0.403181 )
 visible = false
 
-[node name="FirePoint" parent="." index="3"]
+[node name="FirePoint" parent="." index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.17977e-08, -0.470001, -0.251034 )
 
-[node name="Area" parent="." index="6"]
-transform = Transform( 0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 2.1724e-07, -0.129743, -0.666705 )
+[node name="Gun_B" parent="." index="5"]
+visible = false
 
 [node name="Gun_A" parent="." index="7" instance=ExtResource( 3 )]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 3.94187e-07, -0.698312, -1.20975 )
 
-[node name="Audio" parent="." index="8"]
+[node name="Area" parent="." index="8"]
+transform = Transform( 0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 2.1724e-07, -0.129743, -0.666705 )
+
+[node name="CollisionShape" parent="Area" index="0"]
+transform = Transform( 1, 0, -5.68434e-14, 0, 0.999999, 0, 4.26326e-14, 0, 0.999999, 2.20618e-07, -0.647662, -0.672734 )
+
+[node name="Audio" parent="." index="9"]
 max_db = 2.0

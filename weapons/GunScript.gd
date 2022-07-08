@@ -1,4 +1,4 @@
-extends Spatial
+extends RigidBody
 class_name Gun
 
 onready var rof_timer = $RofTimer as Timer
@@ -24,9 +24,11 @@ export(String, FILE, "*.wav") var audio_shot_0
 export(String, FILE, "*.wav") var audio_shot_1
 export(String, FILE, "*.wav") var audio_shot_2
 
+export(String, FILE, "*.wav") var audio_click
+
 export(String, FILE, "*.wav") var audio_reload
 
-onready var audio_player = $Audio
+onready var audio_player = $SpatialAudio
 
 var sound_files = []
 var reloading = false
@@ -52,14 +54,7 @@ func _ready():
     shells.set_shells_drop(shells_drop)
     sound_files = [audio_shot_0, audio_shot_1, audio_shot_2]
 
-func _process(delta):
-    if gravity_active and global_transform.origin.y > 0.2:
-        global_transform.origin.y -= delta * 9.8
-        global_translate(global_transform.basis.z.normalized() * delta * 25)
-    else:
-        global_transform.origin.y == 0.3
-        gravity_active = false
-    
+ 
 func drop():
     equiped = false
     gravity_active = true 
@@ -67,19 +62,19 @@ func drop():
     $DropTimer.start()
    
 
-func fire():
+func fire(i=0):
     
     var sound_index = randi() % sound_files.size()
-    audio_player.stream = load(sound_files[sound_index])
-    audio_player.play()
+    
     if current_ammo <= 0 and not reloading:
-        reload_weapon()
+        audio_player.play(audio_click)
+         
         shells.stop()
         return false
         
     elif can_shoot and current_ammo > 0:
-       
-        audio_player.play()
+        print(">>>>>:",i)
+        audio_player.play(sound_files[sound_index])
         muzzle.muzzle_on()
         
         var new_bullet = Bullet.instance()
@@ -92,7 +87,6 @@ func fire():
         shells.start()
         rof_timer.start()
         current_ammo -= 1
-        print("current_ammo: ", current_ammo)
         return true
 
 
@@ -104,10 +98,9 @@ func hold_trigger():
                 fire()
         FireMode.BURST:
             for shots in remaining_burst_shots:
-                fire()
-                fire()
-                fire() 
-            remaining_burst_shots = 0
+                 fire(shots)
+
+       
         FireMode.AUTO:
              fire()
     
@@ -116,23 +109,24 @@ func hold_trigger():
 func release_trigger():
     trigger_released = true
     shells.stop()
-    resets_burst_shots()
+
 
 func reload_weapon():
+    if ammo_available == 0:
+        reloading = false
+        return
     reloading = true
     reload_timer.start()
  
 
-func resets_burst_shots():
-    remaining_burst_shots = burts_shots
-
 func _on_ReloadTimer_timeout():
-    if ammo_available == 0:
-        reloading = false
-        return
+
     if (ammo_available - max_mag_cap) < 0:
         current_ammo = ammo_available
         ammo_available = 0
+    else:
+        ammo_available = ammo_available - max_mag_cap
+        ammo_available = max_mag_cap
     reloading = false
 
 

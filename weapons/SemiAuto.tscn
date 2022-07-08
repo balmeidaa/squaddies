@@ -6,34 +6,40 @@
 [node name="SemiAuto" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 weapon_name = "uzi"
-max_ammo = 20
+max_mag_cap = 25
 bullet_speed = 50
 millis_between_shots = 200
+max_ammo_cap = 150
+shells_drop = 3
 audio_shot_0 = "res://assets/sfx/burst_shot.wav"
 audio_shot_1 = "res://assets/sfx/burst_shot2.wav"
 audio_shot_2 = "res://assets/sfx/burst_shot3.wav"
 fire_mode = 1
 
-[node name="Muzzle" parent="." index="2"]
+[node name="CollisionShape" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.49963e-07, -0.0973422, 0.767132 )
+
+[node name="Muzzle" parent="." index="3"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -5.65211e-07, -0.00421357, 1.45862 )
 
-[node name="FirePoint" parent="." index="3"]
+[node name="FirePoint" parent="." index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.4145e-07, -0.00417161, 1.6617 )
 
-[node name="Gun_B" parent="." index="4"]
+[node name="Gun_B" parent="." index="5"]
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -2.40454e-07, -0.0842216, 0.737947 )
+visible = false
 
-[node name="Shells" parent="." index="5"]
+[node name="Shells" parent="." index="6"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -2.13162e-07, 0.265718, 0.654194 )
-
-[node name="Area" parent="." index="6"]
-transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1.1, 0, 0, 0 )
-
-[node name="CollisionShape" parent="Area" index="0"]
-transform = Transform( 1, 0, 0, 0, 0.999999, 0, 5.68434e-14, 0, 0.999999, -3.31473e-07, -0.00843837, 0.864302 )
 
 [node name="Uzi_C" parent="." index="7" instance=ExtResource( 2 )]
 transform = Transform( 2.6, 0, 0, 0, 2.6, 0, 0, 0, 2.6, -2.4914e-07, -0.127933, 0.764605 )
 
-[node name="Audio" parent="." index="8"]
+[node name="Area" parent="." index="8"]
+transform = Transform( 1, 0, 0, 0, 0.8, 0, 0, 0, 1.1, 0, 0, 0 )
+
+[node name="CollisionShape" parent="Area" index="0"]
+transform = Transform( 1, 0, -5.68434e-14, 0, 0.999999, 0, 5.68434e-14, 0, 0.999999, -3.06862e-07, -0.00843837, 0.795638 )
+
+[node name="Audio" parent="." index="9"]
 transform = Transform( 0.995214, 0, 0.0977219, 0, 1, 0, -0.0977219, 0, 0.995214, -0.0267464, 0.4083, 1.47992 )

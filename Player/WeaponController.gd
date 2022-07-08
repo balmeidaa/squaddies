@@ -100,8 +100,12 @@ func aim_from_hip():
 func drop_weapon():
     equipped_weapon.drop()
     equipped_weapon.set_as_toplevel(true)
+    equipped_weapon.global_transform = self.global_transform
+    equipped_weapon.apply_torque_impulse(-equipped_weapon.global_transform.basis.z*2) 
+    equipped_weapon.apply_impulse(Vector3(0,0,0), -equipped_weapon.global_transform.basis.z * THROW_FORCE/2)
 
-    
+func weapon_realod():
+    equipped_weapon.reload_weapon()
     
 func throw_grenade(angle_radians:float):
     var grenade = grenade_factory.instance()

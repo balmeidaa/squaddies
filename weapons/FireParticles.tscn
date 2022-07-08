@@ -49,7 +49,6 @@ draw_pass_1 = SubResource( 5 )
 
 [node name="omni" type="OmniLight" parent="Particles"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.877, 0, 0 )
-visible = false
 light_color = Color( 0.968627, 0.847059, 0.0470588, 1 )
 
 [node name="EmitTimer" type="Timer" parent="."]

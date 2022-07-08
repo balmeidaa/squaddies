@@ -1,23 +1,41 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://weapons/FireParticles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://weapons/Bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://weapons/GunScript.gd" type="Script" id=3]
 [ext_resource path="res://weapons/Models/Gun_B.fbx" type="PackedScene" id=4]
 [ext_resource path="res://weapons/ShellParticles.tscn" type="PackedScene" id=5]
+[ext_resource path="res://weapons/SpatialAudio.gd" type="Script" id=6]
+
+[sub_resource type="PhysicsMaterial" id=3]
+friction = 0.6
+rough = true
+bounce = 0.2
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.161261, 0.316875, 1.21427 )
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.3475, 0.68213, 0.847539 )
+extents = Vector3( 0.270496, 0.479293, 0.64797 )
 
-[node name="DefaultGun" type="Spatial"]
+[node name="DefaultGun" type="RigidBody"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0.683332, -1.48444 )
+collision_layer = 32
+collision_mask = 146
+mass = 20.0
+physics_material_override = SubResource( 3 )
 script = ExtResource( 3 )
 Bullet = ExtResource( 2 )
 millis_between_shots = 300
 audio_shot_0 = "res://assets/sfx/burst_shot3.wav"
 audio_shot_1 = "res://assets/sfx/gun_shot3.wav"
 audio_shot_2 = "res://assets/sfx/gun_shot_2.wav"
+audio_click = "res://assets/sfx/click.wav"
 audio_reload = "res://assets/sfx/shotgun_pump.wav"
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16847e-07, -0.508054, -0.665501 )
+shape = SubResource( 2 )
 
 [node name="RofTimer" type="Timer" parent="."]
 
@@ -35,25 +53,23 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.87029e-09, -0.554328, -0.021
 transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 3.07866e-07, -0.634378, -0.944837 )
 
 [node name="Shells" parent="." instance=ExtResource( 5 )]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 3.35158e-07, -0.284438, -1.02859 )
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.35158e-07, -0.284438, -1.02859 )
 
 [node name="Area" type="Area" parent="."]
-collision_layer = 32
+collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16847e-07, -0.696134, -0.665501 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16847e-07, -0.508054, -0.665501 )
 shape = SubResource( 1 )
-
-[node name="Audio" type="AudioStreamPlayer3D" parent="."]
-transform = Transform( 0.995214, 0, 0.0977219, 0, 1, 0, -0.0977219, 0, 0.995214, -0.0267459, -0.141856, -0.202869 )
-attenuation_model = 3
-unit_db = 1.0
-max_distance = 30.0
 
 [node name="DropTimer" type="Timer" parent="."]
 wait_time = 1.5
 one_shot = true
+
+[node name="SpatialAudio" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.562445, 0 )
+script = ExtResource( 6 )
 
 [connection signal="timeout" from="RofTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
