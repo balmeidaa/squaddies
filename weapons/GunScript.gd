@@ -29,6 +29,7 @@ export(String, FILE, "*.wav") var audio_click
 export(String, FILE, "*.wav") var audio_reload
 
 onready var audio_player = $SpatialAudio
+onready var single_player = $SingleAudio
 
 var sound_files = []
 var reloading = false
@@ -54,6 +55,19 @@ func _ready():
     shells.set_shells_drop(shells_drop)
     sound_files = [audio_shot_0, audio_shot_1, audio_shot_2]
 
+func _physics_process(delta):
+    if not trigger_released:
+        match fire_mode:
+            FireMode.SINGLE:
+                if trigger_released:
+                    fire()
+            FireMode.BURST:
+                if remaining_burst_shots:
+                    if fire():
+                        remaining_burst_shots -= 1
+        
+            FireMode.AUTO:
+                fire()
  
 func drop():
     equiped = false
@@ -62,18 +76,18 @@ func drop():
     $DropTimer.start()
    
 
-func fire(i=0):
+func fire():
     
     var sound_index = randi() % sound_files.size()
     
     if current_ammo <= 0 and not reloading:
-        audio_player.play(audio_click)
+        single_player.stream = load(audio_click)
+        single_player.play()
          
         shells.stop()
         return false
         
     elif can_shoot and current_ammo > 0:
-        print(">>>>>:",i)
         audio_player.play(sound_files[sound_index])
         muzzle.muzzle_on()
         
@@ -92,26 +106,21 @@ func fire(i=0):
 
 
 func hold_trigger():
-    match fire_mode:
-        FireMode.SINGLE:
-            if trigger_released:
-                fire()
-        FireMode.BURST:
-            for shots in remaining_burst_shots:
-                 fire(shots)
-
-       
-        FireMode.AUTO:
-             fire()
-    
     trigger_released = false
 
 func release_trigger():
     trigger_released = true
+    if fire_mode == FireMode.BURST:
+        remaining_burst_shots = burts_shots
     shells.stop()
 
 
 func reload_weapon():
+    if reloading:
+        return
+        
+    single_player.stream = load(audio_reload)
+    single_player.play()
     if ammo_available == 0:
         reloading = false
         return
@@ -126,7 +135,7 @@ func _on_ReloadTimer_timeout():
         ammo_available = 0
     else:
         ammo_available = ammo_available - max_mag_cap
-        ammo_available = max_mag_cap
+        current_ammo = max_mag_cap
     reloading = false
 
 
@@ -147,6 +156,9 @@ func get_current_ammo():
 
 func get_max_ammo_cap():
     return max_ammo_cap
+    
+func get_reload_time():
+    return reload_timer.wait_time
 
 func _on_Area_body_entered(body):
     if body.has_method("pick_up_weapon") and not equiped:

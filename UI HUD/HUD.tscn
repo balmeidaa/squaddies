@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/sprites/ammo.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/grenade.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/health.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://assets/fonts/FORCED SQUARE.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
+outline_size = 2
+outline_color = Color( 0.235294, 0.227451, 0.227451, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = SubResource( 1 )
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="Top" type="MarginContainer" parent="."]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 30.0
+
+[node name="HealthContainer" type="HBoxContainer" parent="Top"]
+margin_right = 74.0
+margin_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_constants/separation = 14
+alignment = 2
+
+[node name="HealthTexture" type="TextureRect" parent="Top/HealthContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 1
+flip_h = true
+
+[node name="HealthCounter" type="Label" parent="Top/HealthContainer"]
+margin_left = 44.0
+margin_right = 74.0
+margin_bottom = 21.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 2 )
+text = "100"
+align = 1
+valign = 3
+
+[node name="Bottom" type="MarginContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -100.0
+margin_right = 1024.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+custom_constants/margin_right = 0
+custom_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bottom"]
+margin_top = 16.0
+margin_right = 107.0
+margin_bottom = 83.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+custom_constants/separation = 7
+
+[node name="AmmoContainer" type="HBoxContainer" parent="Bottom/VBoxContainer"]
+margin_right = 107.0
+margin_bottom = 30.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_constants/separation = 14
+alignment = 2
+
+[node name="AmmoTexture" type="TextureRect" parent="Bottom/VBoxContainer/AmmoContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
+flip_h = true
+
+[node name="AmmoCounter" type="Label" parent="Bottom/VBoxContainer/AmmoContainer"]
+margin_left = 44.0
+margin_right = 107.0
+margin_bottom = 21.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 2 )
+text = "30/150"
+align = 1
+valign = 3
+
+[node name="GrenadeContainer" type="HBoxContainer" parent="Bottom/VBoxContainer"]
+margin_top = 37.0
+margin_right = 107.0
+margin_bottom = 67.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_constants/separation = 14
+alignment = 2
+
+[node name="GrenadeTexture" type="TextureRect" parent="Bottom/VBoxContainer/GrenadeContainer"]
+margin_left = 43.0
+margin_right = 73.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="GrenadeCounter" type="Label" parent="Bottom/VBoxContainer/GrenadeContainer"]
+margin_left = 87.0
+margin_right = 107.0
+margin_bottom = 21.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 20, 21 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 2 )
+text = "4"
+align = 1
+valign = 3

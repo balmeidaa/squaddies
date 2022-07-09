@@ -18,6 +18,8 @@ func _ready():
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
     
     var player = add_new_player(1,-1)
+#    var player1 = add_new_player(2,-1)
+#    screen.get_node("Viewport2").show()
 
  
 #    $Debugger.add_property($Player/Camera, "dis", "")

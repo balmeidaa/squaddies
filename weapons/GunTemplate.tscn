@@ -71,6 +71,8 @@ one_shot = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.562445, 0 )
 script = ExtResource( 6 )
 
+[node name="SingleAudio" type="AudioStreamPlayer3D" parent="."]
+
 [connection signal="timeout" from="RofTimer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

@@ -1,6 +1,6 @@
 extends Spatial
 
-var num_players = 8
+var num_players = 4
 const BUS = "master"
 
 var available = []  # The available players.

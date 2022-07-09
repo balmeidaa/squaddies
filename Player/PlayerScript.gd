@@ -69,6 +69,7 @@ var movement = Vector3()
 onready var head = $Head
 onready var camera = $Head/Camera
 
+
 func init_player(playerIndex:int, device_id: int = -1):
     self.player_index = playerIndex
     self.device_id = device_id
@@ -95,6 +96,10 @@ func _ready():
     
     viewport_size = get_viewport().size
     half_viewport = viewport_size/2
+    HudHandler.health_signal(player_index, current_health)
+    HudHandler.grenade_signal(player_index, weapon_controller.get_grenades())
+
+ 
 
 func _input(event):
     #get mouse input for camera rotation
@@ -148,13 +153,13 @@ func _process(delta):
     if Input.is_action_just_released(aim_sight):
         weapon_controller.aim_from_hip()
             
-    if Input.is_action_pressed(reload_action):
+    if Input.is_action_just_pressed(reload_action):
          weapon_controller.reload_weapon()
     
     if Input.is_action_just_pressed(drop_weapon):
          weapon_controller.drop_weapon()
     
-    if Input.is_action_pressed(use_item):
+    if Input.is_action_just_released(use_item):
          weapon_controller.throw_grenade(head.rotation.x)
     
     if velocity.length() > 0:
@@ -213,12 +218,12 @@ func is_full_health():
 func pick_up_weapon(weapon):
     weapon_controller.equip_weapon(weapon)  
 
-func _pick_up_ammo(amount_ammo):
-    pass  
-    
+
+
 func _recieve_damage(damage):
     current_health -= int(round(damage))
     debug_label.text = str(current_health)
+    HudHandler.health_signal(player_index, current_health)
     if current_health <= 0:
         pass
         #anim dead

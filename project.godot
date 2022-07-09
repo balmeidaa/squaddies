@@ -33,6 +33,7 @@ config/icon="res://icon.png"
 [autoload]
 
 InputHandler="*res://InputHandler.gd"
+HudHandler="*res://UI HUD/HUDHandler.gd"
 
 [global]
 

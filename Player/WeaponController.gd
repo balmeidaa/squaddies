@@ -1,8 +1,9 @@
 extends Position3D
 
 var equipped_weapon: Gun = null
-
-var grenades = 0
+onready var parent = get_parent().get_parent()
+onready var reload_timer = $ReloadTimer
+var grenades = MAX_GRENADES
 const AIM_TIME = 0.3
 const HIP_DISTANCE = 0.646
 const MAX_GRENADES = 3
@@ -12,6 +13,11 @@ var pistol = preload("res://weapons/Pistol.tscn")
 var auto_rifle = preload("res://weapons/AutoRifle.tscn")
 var semi_auto = preload("res://weapons/SemiAuto.tscn")
 onready var animation = get_node("../Tween")
+
+var max_cap_ammo = 0
+var current_ammo = 0
+var ammo_available = 0
+var weapon_name = 0  
 
 const grenade_factory = preload("res://weapons/Grenade.tscn")
 
@@ -32,40 +38,29 @@ func equip_weapon(weapon_to_equip:String):
     
     equipped_weapon = weapon_factory(weapon_to_equip).instance()
     equipped_weapon.equiped = true
-    var max_cap_ammo = equipped_weapon.get_max_ammo_cap()
-    var current_ammo = equipped_weapon.get_current_ammo()
-    var ammo_available = equipped_weapon.get_ammo_available()
-    var weapon_name = equipped_weapon.get_weapon_name()  
-
     
-    var weapon_info = {
-        "weapon_object":equipped_weapon,
-        "weapon_name":weapon_name,
-        "ammo_in_mag":current_ammo,
-        "max_cap_mag":max_cap_ammo,
-        "total_ammo": (current_ammo + ammo_available),
-        "max_cap_ammo":max_cap_ammo
-       }
-    
- 
+    max_cap_ammo = equipped_weapon.get_max_ammo_cap()
+    current_ammo = equipped_weapon.get_current_ammo()
+    ammo_available = equipped_weapon.get_ammo_available()
+    weapon_name = equipped_weapon.get_weapon_name()  
      
-        
     add_child(equipped_weapon)
+    
+    if parent.player_index:
+        reload_timer.wait_time = equipped_weapon.get_reload_time()
+        HudHandler.ammo_signal(parent.player_index, current_ammo, ammo_available)
 
 
 func hold_trigger():
     if equipped_weapon:
         equipped_weapon.hold_trigger()
+        if parent.player_index:
+            current_ammo = equipped_weapon.get_current_ammo()
+            HudHandler.ammo_signal(parent.player_index, current_ammo, ammo_available)
     
 func release_trigger():
     if equipped_weapon:
         equipped_weapon.release_trigger()
-
-func check_gun_type():
-    if equipped_weapon.fire_mode == equipped_weapon.FireMode.SINGLE or equipped_weapon.fire_mode == equipped_weapon.FireMode.BURST: 
-        return true
-    return false
-  
     
                
 func weapon_factory(type):
@@ -104,12 +99,36 @@ func drop_weapon():
     equipped_weapon.apply_torque_impulse(-equipped_weapon.global_transform.basis.z*2) 
     equipped_weapon.apply_impulse(Vector3(0,0,0), -equipped_weapon.global_transform.basis.z * THROW_FORCE/2)
 
-func weapon_realod():
+func reload_weapon():
     equipped_weapon.reload_weapon()
+    if parent.player_index:
+        reload_timer.start()
+         
+    
+func set_grenades():
+    grenades += 1
+    if parent.player_index:
+        HudHandler.grenade_signal(parent.player_index, grenades)
+        
+    
+func get_grenades():
+        return grenades
     
 func throw_grenade(angle_radians:float):
-    var grenade = grenade_factory.instance()
-    get_tree().root.add_child(grenade)
-    grenade.global_transform = self.global_transform
-    grenade.apply_torque_impulse(-grenade.global_transform.basis.z*2) 
-    grenade.apply_impulse(Vector3(0,0,0), -grenade.global_transform.basis.z * THROW_FORCE)
+    if grenades > 0:
+        var grenade = grenade_factory.instance()
+        get_tree().root.add_child(grenade)
+        grenade.global_transform = self.global_transform
+        grenade.apply_torque_impulse(-grenade.global_transform.basis.z*2) 
+        grenade.apply_impulse(Vector3(0,0,0), -grenade.global_transform.basis.z * THROW_FORCE)
+        grenades -= 1
+        if parent.player_index:
+            HudHandler.grenade_signal(parent.player_index, grenades)
+
+
+func _on_ReloadTimer_timeout():
+    if parent.player_index:
+        reload_timer.start()
+        current_ammo = equipped_weapon.get_current_ammo()
+        ammo_available = equipped_weapon.get_ammo_available()
+        HudHandler.ammo_signal(parent.player_index, current_ammo, ammo_available)

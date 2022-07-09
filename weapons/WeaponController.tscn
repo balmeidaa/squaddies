@@ -5,3 +5,8 @@
 [node name="WeaponController" type="Position3D"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.251757, 1.20142, 0 )
 script = ExtResource( 2 )
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
