@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.682623, 1.14923, 0.683897 )
+extents = Vector3( 0.39322, 0.484436, 0.391767 )
 
 [node name="ItemTemplate" type="StaticBody"]
 collision_layer = 16
@@ -11,5 +11,5 @@ collision_mask = 8
 billboard = 1
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.735253, 0 )
 shape = SubResource( 1 )

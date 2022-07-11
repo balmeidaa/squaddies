@@ -46,7 +46,7 @@ func equip_weapon(weapon_to_equip:String):
      
     add_child(equipped_weapon)
     
-    if parent.player_index:
+    if "player_index" in parent:
         reload_timer.wait_time = equipped_weapon.get_reload_time()
         HudHandler.ammo_signal(parent.player_index, current_ammo, ammo_available)
 
@@ -54,7 +54,7 @@ func equip_weapon(weapon_to_equip:String):
 func hold_trigger():
     if equipped_weapon:
         equipped_weapon.hold_trigger()
-        if parent.player_index:
+        if "player_index" in parent:
             current_ammo = equipped_weapon.get_current_ammo()
             HudHandler.ammo_signal(parent.player_index, current_ammo, ammo_available)
     
@@ -101,20 +101,37 @@ func drop_weapon():
 
 func reload_weapon():
     equipped_weapon.reload_weapon()
-    if parent.player_index:
+    if "player_index" in parent:
         reload_timer.start()
          
     
-func set_grenades():
-    grenades += 1
-    if parent.player_index:
+func add_grenades(grenade):
+    if grenades == MAX_GRENADES:
+        return false
+        
+    grenades += grenade
+    
+    if "player_index" in parent:
         HudHandler.grenade_signal(parent.player_index, grenades)
         
+    return true
+        
+func add_ammo(ammo_mags):
+    if equipped_weapon.full_ammo():
+        return false
+        
+    equipped_weapon.set_ammo_available(ammo_mags)
     
+    if parent.player_index:
+        current_ammo = equipped_weapon.get_current_ammo()
+        ammo_available = equipped_weapon.get_ammo_available()
+        HudHandler.ammo_signal(parent.player_index, current_ammo, ammo_available)
+    return true
+  
 func get_grenades():
         return grenades
     
-func throw_grenade(angle_radians:float):
+func throw_grenade():
     if grenades > 0:
         var grenade = grenade_factory.instance()
         get_tree().root.add_child(grenade)
@@ -122,12 +139,16 @@ func throw_grenade(angle_radians:float):
         grenade.apply_torque_impulse(-grenade.global_transform.basis.z*2) 
         grenade.apply_impulse(Vector3(0,0,0), -grenade.global_transform.basis.z * THROW_FORCE)
         grenades -= 1
-        if parent.player_index:
+        if "player_index" in parent:
             HudHandler.grenade_signal(parent.player_index, grenades)
 
-
+func check_gun_type():
+    if equipped_weapon.fire_mode == equipped_weapon.FireMode.SINGLE or equipped_weapon.fire_mode == equipped_weapon.FireMode.BURST: 
+        return true
+    return false
+    
 func _on_ReloadTimer_timeout():
-    if parent.player_index:
+    if "player_index" in parent:
         reload_timer.start()
         current_ammo = equipped_weapon.get_current_ammo()
         ammo_available = equipped_weapon.get_ammo_available()

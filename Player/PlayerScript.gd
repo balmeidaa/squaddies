@@ -24,8 +24,8 @@ var aim_right
 
 ####
 
-export var speed = 10
-export var max_health = 120
+export var speed = 30
+export var max_health = 100
 export var gravity = -5
 
 var current_health = max_health
@@ -70,9 +70,9 @@ onready var head = $Head
 onready var camera = $Head/Camera
 
 
-func init_player(playerIndex:int, device_id: int = -1):
-    self.player_index = playerIndex
-    self.device_id = device_id
+func init_player(index:int, device: int = -1):
+    self.player_index = index
+    self.device_id = device
     
 func _ready(): 
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -160,7 +160,7 @@ func _process(delta):
          weapon_controller.drop_weapon()
     
     if Input.is_action_just_released(use_item):
-         weapon_controller.throw_grenade(head.rotation.x)
+         weapon_controller.throw_grenade()
     
     if velocity.length() > 0:
         is_moving = true
@@ -218,7 +218,11 @@ func is_full_health():
 func pick_up_weapon(weapon):
     weapon_controller.equip_weapon(weapon)  
 
+func _pick_up_ammo(ammo_mags):
+    return weapon_controller.add_ammo(ammo_mags)  
 
+func _pick_up_grenade(grenade):
+    return weapon_controller.add_grenades(grenade)  
 
 func _recieve_damage(damage):
     current_health -= int(round(damage))

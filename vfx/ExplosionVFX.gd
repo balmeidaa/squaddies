@@ -1,5 +1,6 @@
 extends Spatial
 
+
 onready var anim_player = $AnimationPlayer as AnimationPlayer
 
 
@@ -12,3 +13,5 @@ func set_up():
     $Smoke.emitting = false
     anim_player.stop()
     
+func explosion_event():
+    EventHandler.explosion(global_transform.origin)

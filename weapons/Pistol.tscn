@@ -36,6 +36,3 @@ transform = Transform( 0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 2.1724e-07, -0.129743, -
 
 [node name="CollisionShape" parent="Area" index="0"]
 transform = Transform( 1, 0, -5.68434e-14, 0, 0.999999, 0, 4.26326e-14, 0, 0.999999, 2.20618e-07, -0.647662, -0.672734 )
-
-[node name="Audio" parent="." index="9"]
-max_db = 2.0

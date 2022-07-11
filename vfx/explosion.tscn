@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/particles/smoke_04.png" type="Texture" id=1]
 [ext_resource path="res://vfx/ExplosionVFX.gd" type="Script" id=2]
@@ -106,6 +106,21 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="QuadMesh" id=14]
 material = SubResource( 13 )
 
+[sub_resource type="Animation" id=16]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimationPlayer:method_call_mode")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
 [sub_resource type="Animation" id=15]
 resource_name = "explosion"
 length = 0.5
@@ -133,6 +148,32 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "explosion_event"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("AnimationPlayer:method_call_mode")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
 
 [node name="Explosion" type="Spatial"]
 script = ExtResource( 2 )
@@ -158,6 +199,8 @@ draw_pass_1 = SubResource( 14 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "explosion"
+method_call_mode = 1
+anims/RESET = SubResource( 16 )
 anims/explosion = SubResource( 15 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

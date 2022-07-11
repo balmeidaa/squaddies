@@ -1,15 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://items/ItemAmmo.gd" type="Script" id=1]
 [ext_resource path="res://items/ExplosiveBarrel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/sprites/ammoCrate.png" type="Texture" id=3]
 
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.871026, 0.864932, 0.770636 )
+
 [node name="AmmoCrate" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-item_type = 0
 
 [node name="Sprite3D" parent="." index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.689741, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.904851, 0 )
 shaded = true
 texture = ExtResource( 3 )
 
@@ -18,3 +20,13 @@ monitorable = true
 
 [node name="ExplosionTimer" parent="." index="3"]
 wait_time = 1.0
+
+[node name="Area" type="Area" parent="." index="6"]
+collision_layer = 16
+collision_mask = 10
+
+[node name="CollisionShape" type="CollisionShape" parent="Area" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.589277, 0 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

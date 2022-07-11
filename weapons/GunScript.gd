@@ -55,20 +55,7 @@ func _ready():
     shells.set_shells_drop(shells_drop)
     sound_files = [audio_shot_0, audio_shot_1, audio_shot_2]
 
-func _physics_process(delta):
-    if not trigger_released:
-        match fire_mode:
-            FireMode.SINGLE:
-                if trigger_released:
-                    fire()
-            FireMode.BURST:
-                if remaining_burst_shots:
-                    if fire():
-                        remaining_burst_shots -= 1
-        
-            FireMode.AUTO:
-                fire()
- 
+
 func drop():
     equiped = false
     gravity_active = true 
@@ -77,7 +64,6 @@ func drop():
    
 
 func fire():
-    
     var sound_index = randi() % sound_files.size()
     
     if current_ammo <= 0 and not reloading:
@@ -106,6 +92,18 @@ func fire():
 
 
 func hold_trigger():
+ 
+    match fire_mode:
+        FireMode.SINGLE:
+            if trigger_released:
+                fire()
+        FireMode.BURST:
+            if remaining_burst_shots:
+                if fire():
+                    remaining_burst_shots -= 1
+        FireMode.AUTO:
+            fire()
+    
     trigger_released = false
 
 func release_trigger():
@@ -145,6 +143,11 @@ func _on_Timer_timeout():
 func get_weapon_name():
     return weapon_name
 
+func set_ammo_available(ammo_mags):
+    ammo_available += (ammo_mags * max_mag_cap)
+    if ammo_available > max_ammo_cap:
+        ammo_available = max_ammo_cap
+
 func get_ammo_available():
     return ammo_available
 
@@ -165,6 +168,8 @@ func _on_Area_body_entered(body):
         body.pick_up_weapon(weapon_name)
         queue_free()
 
+func full_ammo():
+    return ammo_available == max_ammo_cap
 
 func _on_DropTimer_timeout():
     $Area.monitoring = true
