@@ -12,7 +12,7 @@ var default = preload("res://weapons/GunTemplate.tscn")
 var pistol = preload("res://weapons/Pistol.tscn")
 var auto_rifle = preload("res://weapons/AutoRifle.tscn")
 var semi_auto = preload("res://weapons/SemiAuto.tscn")
-onready var animation = get_node("../Tween")
+onready var animation = get_node("../AimDown")
 
 var max_cap_ammo = 0
 var current_ammo = 0

@@ -1,17 +1,16 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EnemySoldier.tscn" type="PackedScene" id=2]
 [ext_resource path="res://weapons/Pistol.tscn" type="PackedScene" id=3]
 [ext_resource path="res://misc/Debugger.tscn" type="PackedScene" id=4]
-[ext_resource path="res://items/ExplosiveBarrel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://BuildingObject/B2.tscn" type="PackedScene" id=5]
 [ext_resource path="res://items/AmmoCrate.tscn" type="PackedScene" id=6]
-[ext_resource path="res://items/SmallHealth.tscn" type="PackedScene" id=7]
 [ext_resource path="res://weapons/AutoRifle.tscn" type="PackedScene" id=8]
 [ext_resource path="res://weapons/SemiAuto.tscn" type="PackedScene" id=9]
 [ext_resource path="res://UI HUD/HUD.tscn" type="PackedScene" id=10]
 [ext_resource path="res://UI HUD/HUDController.gd" type="Script" id=11]
-[ext_resource path="res://items/Grenade.tscn" type="PackedScene" id=12]
+[ext_resource path="res://BuildingObject/B1.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ProceduralSky" id=5]
 
@@ -126,27 +125,6 @@ collision_mask = 8
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.846, 0, -14.265 )
 collision_mask = 8
 
-[node name="ExplosiveBarrel" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.34635, 0, -1.5988 )
-
-[node name="ExplosiveBarrel2" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.908423, 0, -1.5988 )
-
-[node name="ExplosiveBarrel3" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.54447, 0, -1.5988 )
-
-[node name="ExplosiveBarrel4" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8111, 0, -1.5988 )
-
-[node name="ExplosiveBarrel5" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0882893, 4.76837e-07, -4.88755 )
-
-[node name="SmallHealth" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21177, 6.78699 )
-
-[node name="Grenade" parent="." instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.34635, 0, 4.5958 )
-
 [node name="SemiAuto" parent="." instance=ExtResource( 9 )]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, -7.03139, 1.09966, 0 )
 audio_click = ""
@@ -168,3 +146,9 @@ audio_shot_1 = ""
 audio_shot_2 = ""
 audio_click = ""
 audio_reload = ""
+
+[node name="Spatial" parent="." instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.7932, 0, 0 )
+
+[node name="Spatial2" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5653, 0, 0 )

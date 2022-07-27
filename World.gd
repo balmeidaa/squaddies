@@ -17,7 +17,7 @@ func _ready():
     screen.get_node("Viewport2").hide()
     Input.connect("joy_connection_changed", self, "_joy_connection_changed")
     
-    var player = add_new_player(1,-1)
+    var player = add_new_player(1,0)
 #    var player1 = add_new_player(2,-1)
 #    screen.get_node("Viewport2").show()
 

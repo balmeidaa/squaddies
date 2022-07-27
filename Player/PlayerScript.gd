@@ -44,10 +44,10 @@ var squads = []
 var order_attack_active = false
 
 var device_id = -1
-var joypad_motion_factor := .05
+var joypad_motion_factor := .1
 var viewport_size
 var player_teammates
-var position2D = Vector2.ZERO
+ 
 var motion = Vector2.ZERO
 var last_motion = Vector2.ZERO
 
@@ -68,14 +68,14 @@ var movement = Vector3()
 
 onready var head = $Head
 onready var camera = $Head/Camera
-
+onready var tween_camera = $TweenCamera
 
 func init_player(index:int, device: int = -1):
     self.player_index = index
     self.device_id = device
     
 func _ready(): 
-    Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+    #Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
     debug_label.text = str(current_health)
 
     move_right_action = "right_p{n}".format({"n":player_index})
@@ -98,15 +98,17 @@ func _ready():
     half_viewport = viewport_size/2
     HudHandler.health_signal(player_index, current_health)
     HudHandler.grenade_signal(player_index, weapon_controller.get_grenades())
-
+    $Debugger.add_property(self, "motion", "")
  
 
 func _input(event):
     #get mouse input for camera rotation
-    if event is InputEventMouseMotion:
+    if event is InputEventMouseMotion  :
         rotate_y(deg2rad(-event.relative.x * mouse_sense))
         head.rotate_x(deg2rad(-event.relative.y * mouse_sense))
-        head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89)) 
+       
+    
+
         
         
 func _physics_process(delta):
@@ -137,15 +139,24 @@ func _process(delta):
         
     velocity = Vector3.ZERO
     #check for controller 
+    
     if device_id != -1:
-      
-       # Aim/ look around
-        motion.x = Input.get_action_strength(aim_right) - Input.get_action_strength(aim_left)
-        motion.y = Input.get_action_strength(aim_down) - Input.get_action_strength(aim_up)
-        motion.normalized()
-
-        position2D.x += lerp(0, (motion.x) * viewport_size.x/2, joypad_motion_factor)
-        position2D.y += lerp(0, (motion.y) * viewport_size.y, joypad_motion_factor)
+    
+        # Aim/ look around
+        motion.x = pow(Input.get_action_strength(aim_right), 3)  -  pow(Input.get_action_strength(aim_left), 3)
+        motion.y = pow(Input.get_action_strength(aim_down), 3)  - pow(Input.get_action_strength(aim_up), 3) 
+        motion = motion * joypad_motion_factor
+        rotate_y(deg2rad(-motion.x ))
+        head.rotate_x(deg2rad(-motion.y))
+       
+#        tween_camera.interpolate_method(self, "rotate_y", 0.0, deg2rad(-motion.x)), .4, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+#        tween_camera.interpolate_method(head, "rotate_x", 0.0, deg2rad(-motion.y), .4, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+#
+#        tween_camera.start()
+ 
+    
+    head.rotation.x = clamp(head.rotation.x, deg2rad(-89), deg2rad(89)) 
+ 
 
     if Input.is_action_pressed(aim_sight):
         weapon_controller.aim_down()
@@ -180,11 +191,7 @@ func _process(delta):
     move_and_slide(velocity)
  
  
-        
-func _unhandled_input(event):
-    # Player is looking around/aiming using mouse
-    if event is InputEventMouse and device_id == -1:
-        position2D = get_viewport().get_mouse_position()
+ 
     
   
         
